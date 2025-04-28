@@ -63,21 +63,6 @@ int WINAPI WinMain() {
 
     AppState apSt;
 
-    while ((apSt.thtHwnd = CreateWindowExA(
-        0,
-        MainWinClass.lpszClassName,
-        "the voice",
-        WS_VISIBLE|WS_CAPTION,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        0,
-        0,
-        hInstance,
-        0
-    )) == 0);
-
     while ((apSt.mainHwnd = CreateWindowExA(
         0,
         MainWinClass.lpszClassName,
@@ -88,6 +73,21 @@ int WINAPI WinMain() {
         CW_USEDEFAULT,
         CW_USEDEFAULT,
         0,
+        0,
+        hInstance,
+        0
+    )) == 0);
+
+    while ((apSt.thtHwnd = CreateWindowExA(
+        0,
+        MainWinClass.lpszClassName,
+        "the voice",
+        WS_VISIBLE|WS_CAPTION,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        apSt.mainHwnd,
         0,
         hInstance,
         0
