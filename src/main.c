@@ -137,6 +137,13 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_PAINT: {
+            // PAINTSTRUCT ps;
+            // HDC hdc = BeginPaint(hwnd, &ps);
+            
+            // const char* text = "Hello, Windows!";
+            // TextOut(hdc, 10, 10, text, strlen(text));
+
+            // EndPaint(hwnd, &ps);
 
             if (hWnd == apSt->mainHwnd) {
 
