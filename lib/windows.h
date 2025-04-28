@@ -65,19 +65,13 @@ BOOL GetMessageA(
     UINT  wMsgFilterMax
 );
 
+// https://github.com/tpn/winsdk-10/blob/master/Include/10.0.10240.0/um/WinUser.h
 int WINAPI wsprintfA(
     LPSTR,
     LPCSTR,
     ...
 );
 
-// BOOL WINAPI WriteConsole(
-//   _In_             HANDLE  hConsoleOutput,
-//   _In_       const VOID    *lpBuffer,
-//   _In_             DWORD   nNumberOfCharsToWrite,
-//   _Out_opt_        LPDWORD lpNumberOfCharsWritten,
-//   _Reserved_       LPVOID  lpReserved
-// );
 BOOL WINAPI WriteConsoleA(
     HANDLE  hConsoleOutput,
     const CHAR    *lpBuffer,
