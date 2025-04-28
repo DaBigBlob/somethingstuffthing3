@@ -162,6 +162,10 @@ BOOL WINAPI ExtTextOutA(
     const INT  *lpDx
 );
 
+BOOL WINAPI GetCursorPos(
+    PPOINT lpPoint
+);
+
 
 #if defined(__cplusplus)
 }

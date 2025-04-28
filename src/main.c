@@ -103,6 +103,8 @@ LRESULT CALLBACK MainWndProc(
             int dx = cx - msx;
             int dy = cy - msy;
 
+            RECT r;
+
             if (
                 (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
                 &&
@@ -165,13 +167,16 @@ LRESULT CALLBACK MainWndProc(
         case WM_RBUTTONDOWN: {
             char* name;
             if (hWnd == apSt->mainHwnd) {
-                name = "main window =>";
+                name = "main window p =>";
             } else {
-                name = "thought window =>";
+                name = "thought window p =>";
             }
 
+            POINT p;
+            GetCursorPos(&p);
+
             char str[20];
-            wsprintfA(str, "%s X:%d, Y:%d", name, GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            wsprintfA(str, "%s X:%d, Y:%d", name, p.x, p.y);
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
