@@ -137,19 +137,17 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_PAINT: {
-            // PAINTSTRUCT ps;
-            // HDC hdc = BeginPaint(hwnd, &ps);
-            
-            // const char* text = "Hello, Windows!";
-            // TextOut(hdc, 10, 10, text, strlen(text));
-
-            // EndPaint(hwnd, &ps);
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &ps);
 
             if (hWnd == apSt->mainHwnd) {
 
             } else {
-
+                const char* text = "Hello, Windows!";
+                TextOutA(hdc, 10, 10, text, lstrlenA(text));
             }
+
+            EndPaint(hWnd, &ps);
             break;
         }
         case WM_RBUTTONDOWN: {
@@ -169,7 +167,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,

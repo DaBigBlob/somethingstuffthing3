@@ -75,6 +75,15 @@ typedef struct tagCREATESTRUCTA {
     DWORD     dwExStyle;
 } CREATESTRUCTA, *LPCREATESTRUCTA;
 
+typedef struct tagPAINTSTRUCT {
+  HDC  hdc;
+  BOOL fErase;
+  RECT rcPaint;
+  BOOL fRestore;
+  BOOL fIncUpdate;
+  BYTE rgbReserved[32];
+} PAINTSTRUCT, *PPAINTSTRUCT, *NPPAINTSTRUCT, *LPPAINTSTRUCT;
+
 LONG_PTR WINAPI SetWindowLongPtrA(
     HWND     hWnd,
     int      nIndex,
@@ -116,6 +125,24 @@ BOOL WINAPI WriteConsoleA(
 
 BOOL WINAPI IsWindow(
     HWND hWnd
+);
+
+HDC WINAPI BeginPaint(
+    HWND          hWnd,
+    LPPAINTSTRUCT lpPaint
+);
+
+BOOL WINAPI EndPaint(
+    HWND              hWnd,
+    const PAINTSTRUCT *lpPaint
+);
+
+BOOL WINAPI TextOutA(
+    HDC    hdc,
+    int    x,
+    int    y,
+    LPCSTR lpString,
+    int    c
 );
 
 
