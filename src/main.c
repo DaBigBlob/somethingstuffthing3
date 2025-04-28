@@ -179,14 +179,18 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_LBUTTONDOWN: {
+            RECT mr;
+            RECT tr;
+            GetWindowRect(apSt->mainHwnd, &mr);
+            GetWindowRect(apSt->thtHwnd, &tr);
             char str[30];
             wsprintfA(
                 str,
-                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
-                apSt->mainPosDim.x,apSt->mainPosDim.y,
-                apSt->mainPosDim.cx,apSt->mainPosDim.cy,
-                apSt->thtPosDim.x,apSt->thtPosDim.y,
-                apSt->thtPosDim.cx,apSt->thtPosDim.cy
+                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                mr.left,mr.top,
+                mr.right-mr.left,mr.bottom-mr.top,
+                tr.left,tr.top,
+                tr.right-tr.left,tr.bottom-tr.top
             );
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;

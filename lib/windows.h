@@ -166,6 +166,11 @@ BOOL WINAPI GetCursorPos(
     PPOINT lpPoint
 );
 
+BOOL WINAPI GetWindowRect(
+    HWND   hWnd,
+    LPRECT lpRect
+);
+
 
 #if defined(__cplusplus)
 }
