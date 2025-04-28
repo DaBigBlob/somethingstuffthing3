@@ -69,8 +69,32 @@ LRESULT CALLBACK MainWndProc(
 
     switch (msg) {
         case WM_MOUSEMOVE: {
-            if (hWnd != apSt->mainHwnd) break;
-            SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            int msx = GET_X_LPARAM(lp);
+            int msy = GET_Y_LPARAM(lp);
+            if (hWnd == apSt->mainHwnd) {
+                msx += apSt->mainPosDim.x;
+                msy += apSt->mainPosDim.y;
+            } else {
+                msx += apSt->thtPosDim.x;
+                msy += apSt->thtPosDim.y;
+            }
+
+            // we assume the close button is 26px each side // TODO: derive instead
+            #define CB_HSIDE 13
+            #define ICKY_ZONE 52
+            int cx = apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE;
+            int cy = apSt->thtPosDim.y + CB_HSIDE;
+
+            int dx = cx - msx;
+            int dy = cy - msy;
+
+            if (
+                (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
+                &&
+                (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
+            ) {
+                SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            }
             break;
         }
         case WM_MOVE: {
