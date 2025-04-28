@@ -33,7 +33,7 @@ typedef struct tagAppState {
     // RECT* HitBOx;
 } AppState, *PAppState;
 
-POINT GetCloseButtonCenterNoFail(HWND hwnd) {
+POINT GetCloseButtonCenter(HWND hwnd) {
     RECT windowRect;
     while (GetWindowRect(hwnd, &windowRect) == 0);
 
@@ -171,7 +171,7 @@ LRESULT CALLBACK MainWndProc(
         // }
         case WM_MOUSEMOVE: {
             POINT ms = GetCursorPosNoFail();
-            POINT cb = GetCloseButtonCenterNoFail(apSt->thtHwnd);
+            POINT cb = GetCloseButtonCenter(apSt->thtHwnd);
             // POINT v = MakeVector(&ms, &cb);
 
             // if (VectorFits(&v, apSt->HitBOx)) {

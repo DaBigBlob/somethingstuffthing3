@@ -31,10 +31,20 @@ typedef struct tagAppState {
     LONG hb;
 } AppState, *PAppState;
 
-POINT GetCloseButtonCenterNoFail(HWND hwnd) {
-    RECT windowRect;
-    while (GetWindowRect(hwnd, &windowRect) == 0);
+POINT GetCursorPosNoFail() {
+    POINT p;
+    while (GetCursorPos(&p) == 0);
+    return p;
+}
 
+RECT GetWindowRectNoFail(HWND hwnd) {
+    RECT r;
+    while (GetWindowRect(hwnd, &r) == 0);
+    return r;
+}
+
+POINT GetCloseButtonCenter(HWND hwnd) {
+    RECT windowRect = GetWindowRectNoFail(hwnd);
     int buttonWidth;
     while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
     int frameWidth;
@@ -50,28 +60,6 @@ POINT GetCloseButtonCenterNoFail(HWND hwnd) {
 
     return p;
 }
-
-POINT GetCursorPosNoFail() {
-    POINT p;
-    while (GetCursorPos(&p) == 0);
-    return p;
-}
-
-// POINT MakeVector(POINT* src, POINT* dst) {
-//     POINT p = {
-//         .x = dst->x - src->x,
-//         .y = dst->y - src->y
-//     };
-//     return p;
-// }
-
-// BOOL VectorFits(POINT* d, RECT* r) {
-//     return (
-//         (r->left <= d->x) && (d->x <= r->right)
-//         &&
-//         (r->top <= d->y) && (d->y <= r->bottom)
-//     );
-// }
 
 void spawnThought(AppState* apSt, BOOL once) {
     LONG lvl = ++ apSt->lvl;
@@ -123,7 +111,9 @@ LRESULT CALLBACK MainWndProc(
     switch (msg) {
         case WM_MOUSEMOVE: {
             POINT ms = GetCursorPosNoFail();
-            POINT cb = GetCloseButtonCenterNoFail(apSt->thtHwnd);
+            POINT cb = GetCloseButtonCenter(apSt->thtHwnd);
+            RECT tr;
+            GetWindowRect(apSt->thtHwnd, &tr);
             // POINT v = MakeVector(&ms, &cb);
 
             // if (VectorFits(&v, apSt->HitBOx)) {
@@ -134,6 +124,25 @@ LRESULT CALLBACK MainWndProc(
             //     };
             //     SetWindowPos(apSt->thtHwnd, HWND_TOP, 0, 0, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             // }
+            // int ICKY_ZONE = apSt->hb;
+            // int dx = cx - msx;
+            // int dy = cy - msy;
+
+            // if (
+            //     (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
+            //     &&
+            //     (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
+            // ) {
+            //     int mx = (cx + dx - apSt->thtPosDim.cx); //%(apSt->mainPosDim.cx - 50);
+            //     int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
+            //     // if (mx < 0) mx += apSt->mainPosDim.cx;
+            //     // if (my < 0) my += apSt->mainPosDim.cy;
+            //     if (mx < 0) mx = mx + apSt->mainPosDim.cx;
+            //     if (my < 0) my = my + apSt->mainPosDim.cx;
+
+            //     if (mx > (apSt->mainPosDim.cx - apSt->thtPosDim.cx)) mx = mx%((apSt->mainPosDim.cx - apSt->thtPosDim.cx));
+            //     if (my > (apSt->mainPosDim.cy - apSt->thtPosDim.cy)) my = my%(apSt->mainPosDim.cy - apSt->thtPosDim.cy);
+
             break;
         }
         case WM_PAINT: {
@@ -142,7 +151,7 @@ LRESULT CALLBACK MainWndProc(
 
             if (hWnd == apSt->mainHwnd) {
                 char str[27];
-                wsprintfA(str, "MENTAL ILLNESS: %d", apSt->lvl);
+                wsprintfA(str, "MENTAL ILLNESS LEVEL: %d", apSt->lvl);
                 TextOutA(hdc, 10, 10, str, lstrlenA(str));
             } else {
                 const char* text = chThts[(apSt->lvl)%cntCnThts];
