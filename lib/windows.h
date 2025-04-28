@@ -21,8 +21,10 @@ extern "C" {
 #include "../lib/process.h"
 #include "../lib/misc.h"
 
+#define HWND_TOP                        (HWND)0
 #define WM_MOUSEMOVE                    0x0200
 #define WM_LBUTTONDOWN                  0x0201
+#define SWP_SHOWWINDOW                  0x0040
 
 
 #define GET_WPARAM(wp, lp)                      (wp)

@@ -9,8 +9,8 @@
 LRESULT CALLBACK Wndproc(
     HWND hWnd,
     UINT msg,
-    WPARAM wParam,
-    LPARAM lParam
+    WPARAM wp,
+    LPARAM lp
 ){
     switch (msg) {
         case WM_CREATE:
@@ -21,13 +21,14 @@ LRESULT CALLBACK Wndproc(
             // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_LBUTTONDOWN:
+            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW);
             MessageBoxA(hWnd, "Your mother is fat!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
     }
-    return DefWindowProcA(hWnd, msg, wParam, lParam);
+    return DefWindowProcA(hWnd, msg, wp, lp);
 }
 
 int WINAPI WinMain() {
