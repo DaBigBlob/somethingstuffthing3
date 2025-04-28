@@ -24,9 +24,12 @@ extern "C" {
 #define HWND_TOP                        (HWND)0
 #define WM_MOUSEMOVE                    0x0200
 #define WM_LBUTTONDOWN                  0x0201
+#define WM_RBUTTONDOWN                  0x0204
 #define SWP_SHOWWINDOW                  0x0040
 #define SWP_NOSIZE                      0x0001
 #define GWLP_USERDATA                   -21
+#define WM_SIZING                       0x0214
+#define WM_MOVING                       0x0216
 
 #define GET_WPARAM(wp, lp)                      (wp)
 #define GET_LPARAM(wp, lp)                      (lp)

@@ -28,7 +28,19 @@ LRESULT CALLBACK MainWndProc(
 ){
     PAppState apSt;
     if (msg == WM_CREATE) {
-        apSt = (((LPCREATESTRUCTA) lp)->lpCreateParams);
+        LPCREATESTRUCTA creaSt = (LPCREATESTRUCTA) lp;
+        apSt = creaSt->lpCreateParams;
+        if (hWnd == apSt->mainHwnd) {
+            apSt->mainPosDim.x = creaSt->x;
+            apSt->mainPosDim.y = creaSt->y;
+            apSt->mainPosDim.cx = creaSt->cx;
+            apSt->mainPosDim.cy = creaSt->cy;
+        } else {
+            apSt->thtPosDim.x = creaSt->x;
+            apSt->thtPosDim.y = creaSt->y;
+            apSt->thtPosDim.cx = creaSt->cx;
+            apSt->thtPosDim.cy = creaSt->cy;
+        }
         SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)apSt);
     } else {
         apSt = (PAppState) GetWindowLongPtrA(hWnd, GWLP_USERDATA);
@@ -38,6 +50,30 @@ LRESULT CALLBACK MainWndProc(
         case WM_MOUSEMOVE: {
             if (hWnd != apSt->mainHwnd) break;
             SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            break;
+        }
+        case WM_MOVE: {
+            int xPos = (int)(short) LOWORD(lp);   // horizontal position 
+            int yPos = (int)(short) HIWORD(lp);   // vertical position 
+            if (hWnd == apSt->mainHwnd) {
+                apSt->mainPosDim.x = xPos;
+                apSt->mainPosDim.y = yPos;
+            } else {
+                apSt->thtPosDim.x = xPos;
+                apSt->thtPosDim.y = yPos;
+            }
+            break;
+        }
+        case WM_SIZE: {
+            int width = LOWORD(lp);
+            int height = HIWORD(lp);
+            if (hWnd == apSt->mainHwnd) {
+                apSt->mainPosDim.cx = width;
+                apSt->mainPosDim.cy = height;
+            } else {
+                apSt->thtPosDim.cx = width;
+                apSt->thtPosDim.cy = height;
+            }
             break;
         }
         case WM_LBUTTONDOWN: {
@@ -107,7 +143,7 @@ int WINAPI WinMain() {
         CW_USEDEFAULT,
         100,
         100,
-        0,
+        apSt.mainHwnd,
         0,
         hInstance,
         &apSt
