@@ -135,7 +135,7 @@ LRESULT CALLBACK MainWndProc(
 
                 if (gy < 0) gy = gy + py;
                 else if (gy >= py) gy = gy%py;
-
+                            
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, gx, gy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
             break;
@@ -157,11 +157,36 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_RBUTTONDOWN: {
-            MessageBoxA(hWnd, "Holy sheet bro. Damn.", "!", MB_OK|MB_ICONEXCLAMATION);
+            char* name;
+            if (hWnd == apSt->mainHwnd) {
+                name = "main window p =>";
+            } else {
+                name = "thought window p =>";
+            }
+
+            POINT p;
+            GetCursorPos(&p);
+
+            char str[20];
+            wsprintfA(str, "%s X:%d, Y:%d", name, p.x, p.y);
+            MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         case WM_LBUTTONDOWN: {
-            MessageBoxA(hWnd, "Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+            RECT mr;
+            RECT tr;
+            GetWindowRect(apSt->mainHwnd, &mr);
+            GetWindowRect(apSt->thtHwnd, &tr);
+            char str[30];
+            wsprintfA(
+                str,
+                "V9,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                mr.left,mr.top,
+                mr.right-mr.left,mr.bottom-mr.top,
+                tr.left,tr.top,
+                tr.right-tr.left,tr.bottom-tr.top
+            );
+            MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         // UpdateWindow(hWnd);
