@@ -1,6 +1,6 @@
 
 CC = zig cc
-BFLAGS = -target x86_64-windows-gnu -lkernel32
+BFLAGS = -target x86_64-windows-gnu -lkernel32 -lgdi32
 CFLAGS = -static -nostdinc -nostdlib -O3 -Wall -Wextra -Wfatal-errors -ffreestanding -fomit-frame-pointer -fno-plt -nodefaultlibs -fno-asynchronous-unwind-tables -fno-unwind-tables -fdata-sections -fno-stack-protector -fno-builtin -std=c11 -pedantic -Wno-strict-prototypes -Wl,-e,__sys_entry -g0 -fno-exceptions -fno-rtti -fno-ident -Wa,--noexecstack -Wa,--strip-local-absolute -fno-ident
 AFLAGS = -nostdinc -ffreestanding -nodefaultlibs -fno-builtin -Wl,-e,WinMain,--subsystem,windows
 

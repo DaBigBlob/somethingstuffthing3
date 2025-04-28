@@ -145,6 +145,17 @@ BOOL WINAPI TextOutA(
     int    c
 );
 
+BOOL WINAPI ExtTextOutA(
+    HDC        hdc,
+    int        x,
+    int        y,
+    UINT       options,
+    const RECT *lprect,
+    LPCSTR     lpString,
+    UINT       c,
+    const INT  *lpDx
+);
+
 
 #if defined(__cplusplus)
 }

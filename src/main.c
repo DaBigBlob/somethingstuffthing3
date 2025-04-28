@@ -145,6 +145,7 @@ LRESULT CALLBACK MainWndProc(
             } else {
                 const char* text = "Hello, Windows!";
                 TextOutA(hdc, 10, 10, text, lstrlenA(text));
+                // ExtTextOutA(hdc, 10, 10, 0, 0, text, lstrlenA(text), 0);
             }
 
             EndPaint(hWnd, &ps);
