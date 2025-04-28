@@ -100,8 +100,8 @@ LRESULT CALLBACK MainWndProc(
                 int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
                 // if (mx < 0) mx += apSt->mainPosDim.cx;
                 // if (my < 0) my += apSt->mainPosDim.cy;
-                if (mx < 0) mx = -mx;
-                if (my < 0) my = -my;
+                if (mx < 0) mx = mx + apSt->mainPosDim.cx;
+                if (my < 0) my = my + apSt->mainPosDim.cx;
 
                 if (mx > apSt->mainPosDim.cx) mx = mx%(apSt->mainPosDim.cx);
                 if (my > apSt->mainPosDim.cy) my = my%(apSt->mainPosDim.cy);
@@ -160,7 +160,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
