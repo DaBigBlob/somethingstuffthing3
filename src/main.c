@@ -76,7 +76,7 @@ LRESULT CALLBACK MainWndProc(
             }
             break;
         }
-        case WM_LBUTTONDOWN: {
+        case WM_RBUTTONDOWN: {
             char* name;
             if (hWnd == apSt->mainHwnd) {
                 name = "main window =>";
@@ -86,6 +86,20 @@ LRESULT CALLBACK MainWndProc(
 
             char str[20];
             wsprintfA(str, "%s X:%d, Y:%d", name, GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
+            break;
+        }
+        case WM_LBUTTONDOWN: {
+            char* name;
+            char str[30];
+            wsprintfA(
+                str,
+                "XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                apSt->mainPosDim.x,apSt->mainPosDim.y,
+                apSt->mainPosDim.cx,apSt->mainPosDim.cy,
+                apSt->thtPosDim.x,apSt->thtPosDim.y,
+                apSt->thtPosDim.cx,apSt->thtPosDim.cy
+            );
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
