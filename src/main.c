@@ -112,7 +112,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
@@ -123,10 +123,8 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
-            // if (hWnd == apSt->mainHwnd) {
-            //     PostQuitMessage(0);
-            //     return 0;
-            // }
+            if (hWnd == apSt->mainHwnd) PostQuitMessage(0);
+            return 0;
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
@@ -171,20 +169,6 @@ int WINAPI WinMain() {
     )) == 0);
     ShowWindow(apSt.mainHwnd, SW_SHOWMAXIMIZED);
 
-    // while ((apSt.thtHwnd = CreateWindowExA(
-    //     0,
-    //     MainWinClass.lpszClassName,
-    //     "the voice",
-    //     WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
-    //     CW_USEDEFAULT,
-    //     CW_USEDEFAULT,
-    //     150,
-    //     90,
-    //     apSt.mainHwnd,
-    //     0,
-    //     hInstance,
-    //     &apSt
-    // )) == 0);
     spawnThought(&apSt);
 
     MSG msg;
