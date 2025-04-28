@@ -200,7 +200,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V6, buttonWidth=%d, frameWidth=%d, captionHeight=%d, tbs.cy=%d, tbs.cx=%d, tcy=%d",
+                "V7, buttonWidth=%d, frameWidth=%d, captionHeight=%d, tbs.cy=%d, tbs.cx=%d, tcx=%d, tcy=%d",
                 buttonWidth, frameWidth, captionHeight, tbs.cy, tbs.cx, tr.right-tr.left, tr.bottom-tr.top
             );
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
