@@ -112,37 +112,33 @@ LRESULT CALLBACK MainWndProc(
         case WM_MOUSEMOVE: {
             POINT ms = GetCursorPosNoFail();
             POINT cb = GetCloseButtonCenter(apSt->thtHwnd);
-            RECT tr;
-            GetWindowRect(apSt->thtHwnd, &tr);
-            // POINT v = MakeVector(&ms, &cb);
+            RECT tr = GetWindowRectNoFail(apSt->thtHwnd);
+            RECT mr = GetWindowRectNoFail(apSt->mainHwnd);
 
-            // if (VectorFits(&v, apSt->HitBOx)) {
-            //     RECT tr;
-            //     GetWindowRect(apSt->thtHwnd, &tr);
-            //     POINT g = {
-            //         // .x = tr.
-            //     };
-            //     SetWindowPos(apSt->thtHwnd, HWND_TOP, 0, 0, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
-            // }
-            // int ICKY_ZONE = apSt->hb;
-            // int dx = cx - msx;
-            // int dy = cy - msy;
+            int ICKY_ZONE = apSt->hb;
+            int dx = cb.x - ms.x;
+            int dy = cb.y - ms.y;
 
-            // if (
-            //     (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
-            //     &&
-            //     (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
-            // ) {
-            //     int mx = (cx + dx - apSt->thtPosDim.cx); //%(apSt->mainPosDim.cx - 50);
-            //     int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
-            //     // if (mx < 0) mx += apSt->mainPosDim.cx;
-            //     // if (my < 0) my += apSt->mainPosDim.cy;
-            //     if (mx < 0) mx = mx + apSt->mainPosDim.cx;
-            //     if (my < 0) my = my + apSt->mainPosDim.cx;
+            if (
+                (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
+                &&
+                (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
+            ) {
+                int gx = (cb.x + dx + cb.x - tr.left);
+                int gy = (cb.y + dy);
 
-            //     if (mx > (apSt->mainPosDim.cx - apSt->thtPosDim.cx)) mx = mx%((apSt->mainPosDim.cx - apSt->thtPosDim.cx));
-            //     if (my > (apSt->mainPosDim.cy - apSt->thtPosDim.cy)) my = my%(apSt->mainPosDim.cy - apSt->thtPosDim.cy);
+                int mcx = mr.right-mr.left;
+                int mcy = mr.bottom-mr.top;
+                
+                if (gx < 0) gx = gx + mcx;
+                if (gy < 0) gy = gy + mcy;
 
+                // int 
+                if (gx > mcx) gx = gx%mcx;
+                if (gy > mcy) gy = gy%mcy;
+
+                SetWindowPos(apSt->thtHwnd, HWND_TOP, gx, gy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            }
             break;
         }
         case WM_PAINT: {
@@ -185,7 +181,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 mr.left,mr.top,
                 mr.right-mr.left,mr.bottom-mr.top,
                 tr.left,tr.top,
