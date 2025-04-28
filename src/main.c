@@ -17,16 +17,17 @@ LRESULT CALLBACK Wndproc(
             MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_MOUSEMOVE:
-            
+            // SetWindowPos(HWND hWnd, HWND hWndInsertAfter, int X, int Y, int cx, int cy, UINT uFlags);
+            // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
+            break;
+        case WM_LBUTTONDOWN:
+            MessageBoxA(hWnd, "Your mother is fat!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
     }
     return DefWindowProcA(hWnd, msg, wParam, lParam);
-}
-
-void Errhnd() {    
 }
 
 int WINAPI WinMain() {
@@ -49,7 +50,6 @@ int WINAPI WinMain() {
         .lpszClassName = "intrusive thoughts"
     };
     if (RegisterClassA(&wc) == 0) {
-        Errhnd();
         ExitProcess(1);
         return 1;
     }
@@ -69,7 +69,6 @@ int WINAPI WinMain() {
         hInstance,
         0
     )) == 0) {
-        Errhnd();
         ExitProcess(1);
         return 1;
     }

@@ -22,6 +22,7 @@ extern "C" {
 #include "../lib/misc.h"
 
 #define WM_MOUSEMOVE                    0x0200
+#define WM_LBUTTONDOWN                  0x0201
 
 
 #define GET_WPARAM(wp, lp)                      (wp)
