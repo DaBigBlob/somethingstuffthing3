@@ -103,8 +103,6 @@ LRESULT CALLBACK MainWndProc(
             int dx = cx - msx;
             int dy = cy - msy;
 
-            RECT r;
-
             if (
                 (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
                 &&
