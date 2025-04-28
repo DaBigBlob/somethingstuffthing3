@@ -18,7 +18,25 @@ typedef struct tagAppState {
     HWND thtHwnd;
     WndPosDim mainPosDim;
     WndPosDim thtPosDim;
+    WNDCLASS* PWndClass;
 } AppState, *PAppState;
+
+void spawnThought(AppState* apSt) {
+    while ((apSt->thtHwnd = CreateWindowExA(
+        0,
+        apSt->PWndClass->lpszClassName,
+        "the voice",
+        WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        150,
+        90,
+        apSt->mainHwnd,
+        0,
+        apSt->PWndClass->hInstance,
+        apSt
+    )) == 0);
+}
 
 LRESULT CALLBACK MainWndProc(
     HWND hWnd,
@@ -93,7 +111,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V0XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
@@ -104,9 +122,11 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
-            if (hWnd != apSt->mainHwnd) break;
-            PostQuitMessage(0);
-            return 0;
+            if (hWnd == apSt->mainHwnd) {
+                PostQuitMessage(0);
+                return 0;
+            }
+            else spawnThought(apSt);
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
@@ -130,7 +150,7 @@ int WINAPI WinMain() {
     };
     while (RegisterClassA(&MainWinClass) == 0);
 
-    AppState apSt;
+    AppState apSt = {.PWndClass = &MainWinClass};
 
     while ((apSt.mainHwnd = CreateWindowExA(
         0,
@@ -148,20 +168,21 @@ int WINAPI WinMain() {
     )) == 0);
     ShowWindow(apSt.mainHwnd, SW_SHOWMAXIMIZED);
 
-    while ((apSt.thtHwnd = CreateWindowExA(
-        0,
-        MainWinClass.lpszClassName,
-        "the voice",
-        WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        150,
-        90,
-        apSt.mainHwnd,
-        0,
-        hInstance,
-        &apSt
-    )) == 0);
+    // while ((apSt.thtHwnd = CreateWindowExA(
+    //     0,
+    //     MainWinClass.lpszClassName,
+    //     "the voice",
+    //     WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
+    //     CW_USEDEFAULT,
+    //     CW_USEDEFAULT,
+    //     150,
+    //     90,
+    //     apSt.mainHwnd,
+    //     0,
+    //     hInstance,
+    //     &apSt
+    // )) == 0);
+    spawnThought(&apSt);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
