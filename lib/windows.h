@@ -30,6 +30,11 @@ extern "C" {
 #define GWLP_USERDATA                   -21
 #define WM_SIZING                       0x0214
 #define WM_MOVING                       0x0216
+#define IDC_PERSON                      (LPCSTR) MAKEINTRESOURCE(32672)
+#define IDC_PIN                         (LPCSTR) MAKEINTRESOURCE(32671)
+#define IDC_HAND                        (LPCSTR) MAKEINTRESOURCE(32649)
+#define IDC_NO                          (LPCSTR) MAKEINTRESOURCE(32648)
+#define IDC_CROSS                       (LPCSTR) MAKEINTRESOURCE(32515)
 
 #define GET_WPARAM(wp, lp)                      (wp)
 #define GET_LPARAM(wp, lp)                      (lp)

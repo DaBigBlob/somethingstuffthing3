@@ -122,7 +122,7 @@ int WINAPI WinMain() {
         .hIcon = 0,
         .hCursor = LoadCursorA(
             hInstance,
-            (LPCTSTR) MAKEINTRESOURCE(32672) // mouse cursor-arrow
+            IDC_CROSS
         ),
         .hbrBackground = (void *)5, // std window color
         .lpszClassName = "intrusive thoughts"
@@ -154,8 +154,8 @@ int WINAPI WinMain() {
         WS_VISIBLE|WS_CAPTION,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
-        100,
-        100,
+        150,
+        90,
         apSt.mainHwnd,
         0,
         hInstance,
