@@ -134,8 +134,8 @@ LRESULT CALLBACK MainWndProc(
                 if (gy < 0) gy = gy + mcy;
 
                 // int 
-                if (gx > mcx) gx = gx%mcx;
-                if (gy > mcy) gy = gy%mcy;
+                if (gx > (mr.right-tr.left)) gx = gx%(mr.right-tr.left);
+                if (gy > (mr.bottom-tr.top)) gy = gy%(mr.bottom-tr.top);
 
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, gx, gy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
@@ -181,7 +181,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 mr.left,mr.top,
                 mr.right-mr.left,mr.bottom-mr.top,
                 tr.left,tr.top,
