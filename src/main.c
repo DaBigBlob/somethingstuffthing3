@@ -17,7 +17,7 @@ LRESULT CALLBACK MainWndProc(
             MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_MOUSEMOVE:
-            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            // SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_LBUTTONDOWN:
@@ -39,13 +39,10 @@ int WINAPI WinMain() {
         .cbClsExtra = 0,
         .cbWndExtra = 0,
         .hInstance = hInstance,
-        .hIcon = LoadIconA(
-            hInstance,
-            (LPCSTR)32512 // application icon
-        ),
+        .hIcon = 0,
         .hCursor = LoadCursorA(
             hInstance,
-            (LPSTR)0x07f00 // mouse cursor-arrow
+            (LPCTSTR) MAKEINTRESOURCE(32672) // mouse cursor-arrow
         ),
         .hbrBackground = (void *)5, // std window color
         .lpszClassName = "intrusive thoughts"
@@ -73,8 +70,6 @@ int WINAPI WinMain() {
         ExitProcess(1);
         return 1;
     }
-    // ShowWindow(mainWn, SW_SHOW);
-    // UpdateWindow(mainWn);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
