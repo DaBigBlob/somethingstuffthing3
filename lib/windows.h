@@ -26,7 +26,7 @@ extern "C" {
 #define WM_LBUTTONDOWN                  0x0201
 #define SWP_SHOWWINDOW                  0x0040
 #define SWP_NOSIZE                      0x0001
-
+#define GWLP_USERDATA                   -21
 
 #define GET_WPARAM(wp, lp)                      (wp)
 #define GET_LPARAM(wp, lp)                      (lp)
@@ -52,13 +52,39 @@ extern "C" {
 #define GET_WM_COMMAND_MPS(id, hwnd, cmd)    \
         (WPARAM)MAKELONG(id, cmd), (LPARAM)(hwnd)
 
+typedef struct tagCREATESTRUCTA {
+    LPVOID    lpCreateParams;
+    HINSTANCE hInstance;
+    HMENU     hMenu;
+    HWND      hwndParent;
+    int       cy;
+    int       cx;
+    int       y;
+    int       x;
+    LONG      style;
+    LPCSTR    lpszName;
+    LPCSTR    lpszClass;
+    DWORD     dwExStyle;
+} CREATESTRUCTA, *LPCREATESTRUCTA;
+
+LONG_PTR WINAPI SetWindowLongPtrA(
+    HWND     hWnd,
+    int      nIndex,
+    LONG_PTR dwNewLong
+);
+
+LONG_PTR WINAPI GetWindowLongPtrA(
+    HWND hWnd,
+    int  nIndex
+);
+
 // BOOL GetMessageA(
 //   [out]          LPMSG lpMsg,
 //   [in, optional] HWND  hWnd,
 //   [in]           UINT  wMsgFilterMin,
 //   [in]           UINT  wMsgFilterMax
 // );
-BOOL GetMessageA(
+BOOL WINAPI GetMessageA(
     LPMSG lpMsg,
     HWND  hWnd,
     UINT  wMsgFilterMin,

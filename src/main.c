@@ -17,21 +17,27 @@ LRESULT CALLBACK MainWndProc(
     WPARAM wp,
     LPARAM lp
 ){
+    PAppState apSt;
+    if (msg == WM_CREATE) {
+        apSt = (((LPCREATESTRUCTA) lp)->lpCreateParams);
+        SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)apSt);
+    } else {
+        apSt = (PAppState) GetWindowLongPtrA(hWnd, GWLP_USERDATA);
+    }
+
     switch (msg) {
-        case WM_CREATE: {
-            MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
-            break;
-        }
         case WM_MOUSEMOVE: {
+            if (hWnd != apSt->mainHwnd) break;
             // SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
+            SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             break;
         }
         case WM_LBUTTONDOWN: {
+            if (hWnd != apSt->mainHwnd) break;
+
             char str[20];
             wsprintfA(str, "X:%d, Y:%d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
-            
-            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
@@ -75,7 +81,7 @@ int WINAPI WinMain() {
         0,
         0,
         hInstance,
-        0
+        &apSt
     )) == 0);
 
     while ((apSt.thtHwnd = CreateWindowExA(
@@ -90,7 +96,7 @@ int WINAPI WinMain() {
         apSt.mainHwnd,
         0,
         hInstance,
-        0
+        &apSt
     )) == 0);
 
     MSG msg;
