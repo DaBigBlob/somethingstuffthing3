@@ -19,7 +19,7 @@ typedef struct tagAppState {
     WndPosDim mainPosDim;
     WndPosDim thtPosDim;
     WNDCLASS* PWndClass;
-    int ickyness
+    int ickyness;
 } AppState, *PAppState;
 
 void spawnThought(AppState* apSt, BOOL once) {
