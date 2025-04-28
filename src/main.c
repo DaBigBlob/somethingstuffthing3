@@ -70,7 +70,6 @@ LRESULT CALLBACK MainWndProc(
     switch (msg) {
         case WM_MOUSEMOVE: {
             if (hWnd != apSt->mainHwnd) break;
-            // if (!(IsWindow(apSt->thtHwnd))) spawnThought(apSt, FALSE);
             SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             break;
         }
@@ -115,7 +114,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
@@ -130,7 +129,7 @@ LRESULT CALLBACK MainWndProc(
                 PostQuitMessage(0);
                 return 0;
             }
-            // else spawnThought(apSt, TRUE); // TODO: add this back for release
+            else spawnThought(apSt, TRUE); // TODO: add this back for release
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
