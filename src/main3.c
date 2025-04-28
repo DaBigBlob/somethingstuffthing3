@@ -171,8 +171,39 @@ LRESULT CALLBACK MainWndProc(
             MessageBoxA(hWnd, "Holy sheet bro. Damn.", "!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
+        // case WM_LBUTTONDOWN: {
+        //     MessageBoxA(hWnd, "2Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+        //     break;
+        // }
         case WM_LBUTTONDOWN: {
-            MessageBoxA(hWnd, "Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+            int buttonWidth;
+            while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
+            int frameWidth;
+            while ((frameWidth = GetSystemMetrics(SM_CXFRAME)) == 0);
+            int captionHeight;
+            while ((captionHeight = GetSystemMetrics(SM_CYCAPTION)) == 0);
+
+            LONG lvl = ++ apSt->lvl;
+            apSt->hb = lvl*buttonWidth;
+
+            HDC hdc = GetDC(apSt->thtHwnd);
+            const char* nxt_tht = chThts[(apSt->lvl)%cntCnThts];
+            SIZE tbs;
+            while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
+            ReleaseDC(apSt->thtHwnd, hdc);
+            tbs.cx = tbs.cy + tbs.cx + frameWidth*2;
+            tbs.cy = (tbs.cy)*2 + frameWidth + captionHeight;
+
+            RECT tr;
+            GetWindowRect(apSt->thtHwnd, &tr);
+
+            char str[30];
+            wsprintfA(
+                str,
+                "V0, buttonWidth=%d, frameWidth=%d, captionHeight=%d, tbs.cy=%d, tbs.cx=%d, tcx=%d, tcy=%d",
+                buttonWidth, frameWidth, captionHeight, tbs.cy, tbs.cx, tr.right-tr.left, tr.bottom-tr.top
+            );
+            MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         // UpdateWindow(hWnd);
