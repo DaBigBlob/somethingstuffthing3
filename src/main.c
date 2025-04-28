@@ -13,8 +13,6 @@ const char* chThts[] = {
     "Invest in Apple, Inc.",
     "Kidnapper? I barely know 'er.",
     "The knives are speaking to me.",
-    "TBD",
-    "TBD",
     "TBD"
 };
 const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
