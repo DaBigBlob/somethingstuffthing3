@@ -125,7 +125,6 @@ LRESULT CALLBACK MainWndProc(
     }
 
     switch (msg) {
-        case WM_CREATE:
         case WM_MOUSEMOVE: {
             POINT ms = GetCursorPosNoFail();
             POINT cb = GetCloseButtonCenter(apSt->thtHwnd);
