@@ -12,6 +12,11 @@ make cmpl
 ```
 .S will be in `asm/` directory
 
+## cleanup assembly further
+```sh
+make ascl
+```
+
 ## asm to exe
 ```sh
 make assm
