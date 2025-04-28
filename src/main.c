@@ -151,7 +151,7 @@ LRESULT CALLBACK MainWndProc(
             HDC hdc = BeginPaint(hWnd, &ps);
 
             if (hWnd == apSt->mainHwnd) {
-                char str[20];
+                char str[27];
                 wsprintfA(str, "MENTAL ILLNESS: %d", apSt->ickyness);
                 TextOutA(hdc, 10, 10, str, lstrlenA(str));
             } else {
