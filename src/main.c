@@ -5,7 +5,6 @@
 #include "../lib/process.h"
 #include "../lib/misc.h"
 #include "../lib/windows.h"
-#include <stdio.h>
 
 LRESULT CALLBACK MainWndProc(
     HWND hWnd,
@@ -25,7 +24,8 @@ LRESULT CALLBACK MainWndProc(
         }
         case WM_LBUTTONDOWN: {
             char str[20];
-            sprintf(str, "%d %d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            wsprintfA(str, "%d %d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            
             SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;

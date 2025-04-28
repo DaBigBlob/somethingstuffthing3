@@ -65,6 +65,13 @@ BOOL GetMessageA(
     UINT  wMsgFilterMax
 );
 
+int
+WINAPI
+wsprintfA(
+    LPSTR,
+    LPCSTR,
+    ...
+);
 
 // BOOL WINAPI WriteConsole(
 //   _In_             HANDLE  hConsoleOutput,
