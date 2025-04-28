@@ -123,6 +123,7 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
+            if (hWnd != apSt->mainHwnd) break;
             PostQuitMessage(0);
             return 0;
         }
