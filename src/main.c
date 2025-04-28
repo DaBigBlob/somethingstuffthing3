@@ -21,7 +21,7 @@ LRESULT CALLBACK Wndproc(
             // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_LBUTTONDOWN:
-            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW);
+            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), 20, 20, SWP_SHOWWINDOW|SWP_NOSIZE);
             MessageBoxA(hWnd, "Your mother is fat!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_DESTROY:

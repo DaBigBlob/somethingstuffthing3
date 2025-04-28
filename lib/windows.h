@@ -25,6 +25,7 @@ extern "C" {
 #define WM_MOUSEMOVE                    0x0200
 #define WM_LBUTTONDOWN                  0x0201
 #define SWP_SHOWWINDOW                  0x0040
+#define SWP_NOSIZE                      0x0001
 
 
 #define GET_WPARAM(wp, lp)                      (wp)
