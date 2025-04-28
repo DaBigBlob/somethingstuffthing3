@@ -135,7 +135,7 @@ int WINAPI WinMain() {
         0,
         MainWinClass.lpszClassName,
         MainWinClass.lpszClassName,
-        WS_VISIBLE|WS_CAPTION|WS_MAXIMIZE|WS_CHILD,
+        WS_VISIBLE|WS_CAPTION|WS_MAXIMIZE,
         0,
         0,
         CW_USEDEFAULT,
