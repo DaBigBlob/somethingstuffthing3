@@ -6,7 +6,7 @@
 #include "../lib/misc.h"
 #include "../lib/windows.h"
 
-LRESULT CALLBACK Wndproc(
+LRESULT CALLBACK MainWndProc(
     HWND hWnd,
     UINT msg,
     WPARAM wp,
@@ -17,11 +17,11 @@ LRESULT CALLBACK Wndproc(
             MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_MOUSEMOVE:
-            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), 20, 20, SWP_SHOWWINDOW|SWP_NOSIZE);
+            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_LBUTTONDOWN:
-            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), 20, 20, SWP_SHOWWINDOW|SWP_NOSIZE);
+            SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             MessageBoxA(hWnd, "Your mother is fat!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         case WM_DESTROY:
@@ -33,9 +33,9 @@ LRESULT CALLBACK Wndproc(
 
 int WINAPI WinMain() {
     HINSTANCE hInstance = GetModuleHandleA(0);
-    WNDCLASS wc = {
+    WNDCLASS MainWinClass = {
         .style = 0,
-        .lpfnWndProc = Wndproc,
+        .lpfnWndProc = MainWndProc,
         .cbClsExtra = 0,
         .cbWndExtra = 0,
         .hInstance = hInstance,
@@ -50,7 +50,7 @@ int WINAPI WinMain() {
         .hbrBackground = (void *)5, // std window color
         .lpszClassName = "intrusive thoughts"
     };
-    if (RegisterClassA(&wc) == 0) {
+    if (RegisterClassA(&MainWinClass) == 0) {
         ExitProcess(1);
         return 1;
     }
@@ -58,8 +58,8 @@ int WINAPI WinMain() {
     HWND mainWn;
     if ((mainWn = CreateWindowExA(
         0,
-        wc.lpszClassName,
-        wc.lpszClassName,
+        MainWinClass.lpszClassName,
+        MainWinClass.lpszClassName,
         WS_VISIBLE|WS_MAXIMIZE,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
@@ -73,8 +73,8 @@ int WINAPI WinMain() {
         ExitProcess(1);
         return 1;
     }
-    ShowWindow(mainWn, SW_SHOW);
-    UpdateWindow(mainWn);
+    // ShowWindow(mainWn, SW_SHOW);
+    // UpdateWindow(mainWn);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
