@@ -9,8 +9,13 @@
 #define HARDNESS_GRADIENT 30
 
 const char* chThts[] = {
-    "Im gonna do it.",
-    "Kidnapper? I barely know 're!"
+    "00",
+    "11",
+    "22",
+    "33",
+    "44",
+    "55",
+    "66",
 };
 const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
 
