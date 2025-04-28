@@ -104,6 +104,7 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
+            if (hWnd != apSt->mainHwnd) break;
             PostQuitMessage(0);
             return 0;
         }
@@ -151,7 +152,7 @@ int WINAPI WinMain() {
         0,
         MainWinClass.lpszClassName,
         "the voice",
-        WS_VISIBLE|WS_CAPTION|WS_TILEDWINDOW,
+        WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
         150,
