@@ -127,17 +127,15 @@ LRESULT CALLBACK MainWndProc(
                 int gx = (cb.x + dx - (cb.x - tr.left));
                 int gy = (cb.y + dy);
 
-                int mcx = mr.right-mr.left;
-                int mcy = mr.bottom-mr.top;
-                int tcx = tr.right-tr.left;
-                int tcy = tr.bottom-tr.top;
+                int px = mr.right - (tr.right-tr.left);
+                int py = mr.bottom - (tr.bottom-tr.top);
                 
-                if (gx < 0) gx = gx + mr.right;
-                if (gy < 0) gy = gy + mr.bottom;
+                if (gx < 0) gx = gx + px;
+                if (gy < 0) gy = gy + py;
 
                 // int 
-                if (gx >= (mcx-tcx)) gx = gx%(mcx-tcx);
-                if (gy >= (mcy-tcy)) gy = gy%(mcy-tcy);
+                if (gx >= px) gx = gx%px;
+                if (gy >= py) gy = gy%py;
 
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, gx, gy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
