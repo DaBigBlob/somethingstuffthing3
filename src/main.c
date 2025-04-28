@@ -28,16 +28,19 @@ LRESULT CALLBACK MainWndProc(
     switch (msg) {
         case WM_MOUSEMOVE: {
             if (hWnd != apSt->mainHwnd) break;
-            // SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
-            // MessageBoxA(hWnd, "Window created!", "Ding!", MB_OK|MB_ICONEXCLAMATION);
             SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             break;
         }
         case WM_LBUTTONDOWN: {
-            if (hWnd != apSt->mainHwnd) break;
+            char* name;
+            if (hWnd == apSt->mainHwnd) {
+                name = "main window =>";
+            } else {
+                name = "thought window =>";
+            }
 
             char str[20];
-            wsprintfA(str, "X:%d, Y:%d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            wsprintfA(str, "%s X:%d, Y:%d", name, GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
@@ -74,11 +77,11 @@ int WINAPI WinMain() {
         0,
         MainWinClass.lpszClassName,
         MainWinClass.lpszClassName,
-        WS_VISIBLE|WS_MAXIMIZE,
+        WS_VISIBLE|WS_CAPTION|WS_MAXIMIZE,
         0,
         0,
-        100,
-        100,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
         0,
         0,
         hInstance,
@@ -93,8 +96,8 @@ int WINAPI WinMain() {
         WS_VISIBLE|WS_CAPTION,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
+        100,
+        100,
         apSt.mainHwnd,
         0,
         hInstance,
