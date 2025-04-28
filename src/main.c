@@ -73,7 +73,7 @@ void spawnThought(AppState* apSt, BOOL once) {
     SIZE tbs;
     while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
     ReleaseDC(apSt->thtHwnd, hdc);
-    tbs.cy += 8*buttonHeight;
+    tbs.cy *= 8;
 
     RECT mr;
     GetWindowRect(apSt->mainHwnd, &mr);
@@ -160,7 +160,7 @@ LRESULT CALLBACK MainWndProc(
                 TextOutA(hdc, 10, 10, str, lstrlenA(str));
             } else {
                 const char* text = chThts[(apSt->lvl)%cntCnThts];
-                TextOutA(hdc, 10, 10, text, lstrlenA(text));
+                TextOutA(hdc, 0, 0, text, lstrlenA(text));
             }
 
             EndPaint(hWnd, &ps);
@@ -182,7 +182,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V0,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V1,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 mr.left,mr.top,
                 mr.right-mr.left,mr.bottom-mr.top,
                 tr.left,tr.top,
