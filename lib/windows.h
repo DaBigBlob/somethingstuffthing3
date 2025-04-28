@@ -114,6 +114,10 @@ BOOL WINAPI WriteConsoleA(
     LPVOID  lpReserved
 );
 
+BOOL WINAPI IsWindow(
+    HWND hWnd
+);
+
 
 #if defined(__cplusplus)
 }
