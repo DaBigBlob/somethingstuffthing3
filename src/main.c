@@ -85,34 +85,24 @@ LRESULT CALLBACK MainWndProc(
             // we assume the close button is 26px each side // TODO: derive instead
             #define CB_HSIDE 13
             #define ICKY_ZONE apSt->ickyness
-            #define ccx (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE)
-            #define ccy (apSt->thtPosDim.y + CB_HSIDE)
+            int cx = (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE);
+            int cy = (apSt->thtPosDim.y + CB_HSIDE);
 
-            #define dx (ccx - msx)
-            #define dy (ccy - msy)
+            int dx = cx - msx;
+            int dy = cy - msy;
 
             if (
                 (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
                 &&
                 (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
             ) {
-                int mx = (ccx + dx)%(apSt->mainPosDim.cx);
-                int my = (ccy + dy)%(apSt->mainPosDim.cy);
-
+                int mx = (cx + dx)%(apSt->mainPosDim.cx);
+                int my = (cy + dy)%(apSt->mainPosDim.cy);
                 if (mx < 0) mx += apSt->mainPosDim.cx;
                 if (my < 0) my += apSt->mainPosDim.cy;
 
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, mx, my, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
-
-            #undef mx
-            #undef my
-            #undef CB_HSIDE
-            #undef ICKY_ZONE
-            #undef ccx
-            #undef ccy
-            #undef dx
-            #undef dy
             break;
         }
         case WM_MOVE: {
@@ -165,7 +155,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
