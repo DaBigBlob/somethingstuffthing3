@@ -9,10 +9,10 @@
 #define HARDNESS_GRADIENT 30
 
 const char* chThts[] = {
-    "00",
-    "11",
-    "22",
-    "33"
+    "00 end myself",
+    "11 end myself end myself end myself",
+    "22 end myself end myself",
+    "33 end"
 };
 const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
 
