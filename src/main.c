@@ -25,7 +25,7 @@ typedef struct tagAppState {
 } AppState, *PAppState;
 
 void spawnThought(AppState* apSt, BOOL once) {
-    apSt->ickyness += HARDNESS_GRADIENT;
+    apSt->ickyness ++;
     while ((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
@@ -86,7 +86,7 @@ LRESULT CALLBACK MainWndProc(
 
             // we assume the close button is 26px each side // TODO: derive instead
             #define CB_HSIDE 13
-            #define ICKY_ZONE apSt->ickyness
+            int ICKY_ZONE = (apSt->ickyness)*HARDNESS_GRADIENT;
             int cx = (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE);
             int cy = (apSt->thtPosDim.y - CB_HSIDE);
 
