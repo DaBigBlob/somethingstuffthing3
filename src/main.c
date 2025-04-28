@@ -132,8 +132,8 @@ LRESULT CALLBACK MainWndProc(
                 int tcx = tr.right-tr.left;
                 int tcy = tr.bottom-tr.top;
                 
-                if (gx < 0) gx = gx + mcx;
-                if (gy < 0) gy = gy + mcy;
+                if (gx < 0) gx = gx + mr.right;
+                if (gy < 0) gy = gy + mr.bottom;
 
                 // int 
                 if (gx >= (mcx-tcx)) gx = gx%(mcx-tcx);
@@ -183,7 +183,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 mr.left,mr.top,
                 mr.right-mr.left,mr.bottom-mr.top,
                 tr.left,tr.top,
