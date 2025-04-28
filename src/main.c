@@ -90,7 +90,6 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_LBUTTONDOWN: {
-            char* name;
             char str[30];
             wsprintfA(
                 str,
