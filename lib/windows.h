@@ -137,6 +137,12 @@ BOOL WINAPI EndPaint(
     const PAINTSTRUCT *lpPaint
 );
 
+BOOL WINAPI InvalidateRect(
+    HWND       hWnd,
+    const RECT *lpRect,
+    BOOL       bErase
+);
+
 BOOL WINAPI TextOutA(
     HDC    hdc,
     int    x,

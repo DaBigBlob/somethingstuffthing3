@@ -48,7 +48,9 @@ void spawnThought(AppState* apSt, BOOL once) {
     )) == 0) {
         if (once) return;
     };
+    InvalidateRect(apSt->thtHwnd, NULL, TRUE);
     UpdateWindow(apSt->thtHwnd);
+    InvalidateRect(apSt->mainHwnd, NULL, TRUE);
     UpdateWindow(apSt->mainHwnd);
 }
 
@@ -175,7 +177,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
