@@ -26,9 +26,11 @@ typedef struct tagWndPosDim {
 typedef struct tagAppState {
     HWND mainHwnd;
     HWND thtHwnd;
+    WndPosDim mainPosDim;
+    WndPosDim thtPosDim;
     WNDCLASS* PWndClass;
     int lvl;
-    LONG hb;
+    // RECT* HitBOx;
 } AppState, *PAppState;
 
 POINT GetCloseButtonCenterNoFail(HWND hwnd) {
@@ -57,39 +59,35 @@ POINT GetCursorPosNoFail() {
     return p;
 }
 
-// POINT MakeVector(POINT* src, POINT* dst) {
-//     POINT p = {
-//         .x = dst->x - src->x,
-//         .y = dst->y - src->y
-//     };
-//     return p;
-// }
+POINT MakeVector(POINT* src, POINT* dst) {
+    POINT p = {
+        .x = dst->x - src->x,
+        .y = dst->y - src->y
+    };
+    return p;
+}
 
-// BOOL VectorFits(POINT* d, RECT* r) {
-//     return (
-//         (r->left <= d->x) && (d->x <= r->right)
-//         &&
-//         (r->top <= d->y) && (d->y <= r->bottom)
-//     );
-// }
+BOOL VectorFits(POINT* d, RECT* r) {
+    return (
+        (r->left <= d->x) && (d->x <= r->right)
+        &&
+        (r->top <= d->y) && (d->y <= r->bottom)
+    );
+}
 
 void spawnThought(AppState* apSt, BOOL once) {
     LONG lvl = ++ apSt->lvl;
-    apSt->hb = lvl*HARDNESS_GRADIENT;
-
-    RECT mr;
-    GetWindowRect(apSt->mainHwnd, &mr);
-    POINT p = {
-        .x = (mr.right-mr.left)/2,
-        .y = (mr.bottom-mr.top)/2,
-    };
+    // apSt->HitBOx->bottom = lvl*HARDNESS_GRADIENT;
+    // apSt->HitBOx->top = lvl*HARDNESS_GRADIENT;
+    // apSt->HitBOx->left = lvl*HARDNESS_GRADIENT;
+    // apSt->HitBOx->right = lvl*HARDNESS_GRADIENT;
     while ((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
         "the voice",
         WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU,
-        p.x,
-        p.y,
+        apSt->mainPosDim.cx/2,
+        apSt->mainPosDim.cy/2,
         150,
         90,
         apSt->mainHwnd,
@@ -115,12 +113,62 @@ LRESULT CALLBACK MainWndProc(
     if (msg == WM_CREATE) {
         LPCREATESTRUCTA creaSt = (LPCREATESTRUCTA) lp;
         apSt = creaSt->lpCreateParams;
+        if (hWnd == apSt->mainHwnd) {
+            apSt->mainPosDim.x = creaSt->x;
+            apSt->mainPosDim.y = creaSt->y;
+            apSt->mainPosDim.cx = creaSt->cx;
+            apSt->mainPosDim.cy = creaSt->cy;
+        } else {
+            apSt->thtPosDim.x = creaSt->x;
+            apSt->thtPosDim.y = creaSt->y;
+            apSt->thtPosDim.cx = creaSt->cx;
+            apSt->thtPosDim.cy = creaSt->cy;
+        }
         SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)apSt);
     } else {
         apSt = (PAppState) GetWindowLongPtrA(hWnd, GWLP_USERDATA);
     }
 
     switch (msg) {
+        // case WM_MOUSEMOVE: {
+        //     int msx = GET_X_LPARAM(lp);
+        //     int msy = GET_Y_LPARAM(lp);
+        //     if (hWnd == apSt->mainHwnd) {
+        //         msx += apSt->mainPosDim.x;
+        //         msy += apSt->mainPosDim.y;
+        //     } else {
+        //         msx += apSt->thtPosDim.x;
+        //         msy += apSt->thtPosDim.y;
+        //     }
+
+        //     // we assume the close button is 26px each side // TODO: derive instead
+        //     #define CB_HSIDE 13
+        //     int ICKY_ZONE = (apSt->ickyness)*HARDNESS_GRADIENT;
+        //     int cx = (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE);
+        //     int cy = (apSt->thtPosDim.y - CB_HSIDE);
+
+        //     int dx = cx - msx;
+        //     int dy = cy - msy;
+
+        //     if (
+        //         (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
+        //         &&
+        //         (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
+        //     ) {
+        //         int mx = (cx + dx - apSt->thtPosDim.cx); //%(apSt->mainPosDim.cx - 50);
+        //         int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
+        //         // if (mx < 0) mx += apSt->mainPosDim.cx;
+        //         // if (my < 0) my += apSt->mainPosDim.cy;
+        //         if (mx < 0) mx = mx + apSt->mainPosDim.cx;
+        //         if (my < 0) my = my + apSt->mainPosDim.cx;
+
+        //         if (mx > (apSt->mainPosDim.cx - apSt->thtPosDim.cx)) mx = mx%((apSt->mainPosDim.cx - apSt->thtPosDim.cx));
+        //         if (my > (apSt->mainPosDim.cy - apSt->thtPosDim.cy)) my = my%(apSt->mainPosDim.cy - apSt->thtPosDim.cy);
+
+        //         SetWindowPos(apSt->thtHwnd, HWND_TOP, mx, my, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+        //     }
+        //     break;
+        // }
         case WM_MOUSEMOVE: {
             POINT ms = GetCursorPosNoFail();
             POINT cb = GetCloseButtonCenterNoFail(apSt->thtHwnd);
@@ -134,6 +182,66 @@ LRESULT CALLBACK MainWndProc(
             //     };
             //     SetWindowPos(apSt->thtHwnd, HWND_TOP, 0, 0, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             // }
+            int msx = GET_X_LPARAM(lp);
+            int msy = GET_Y_LPARAM(lp);
+            if (hWnd == apSt->mainHwnd) {
+                msx += apSt->mainPosDim.x;
+                msy += apSt->mainPosDim.y;
+            } else {
+                msx += apSt->thtPosDim.x;
+                msy += apSt->thtPosDim.y;
+            }
+
+            // we assume the close button is 26px each side // TODO: derive instead
+            #define CB_HSIDE 13
+            int ICKY_ZONE = (apSt->lvl)*HARDNESS_GRADIENT;
+            int cx = (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE);
+            int cy = (apSt->thtPosDim.y - CB_HSIDE);
+
+            int dx = cx - msx;
+            int dy = cy - msy;
+
+            if (
+                (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
+                &&
+                (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
+            ) {
+                int mx = (cx + dx - apSt->thtPosDim.cx); //%(apSt->mainPosDim.cx - 50);
+                int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
+                // if (mx < 0) mx += apSt->mainPosDim.cx;
+                // if (my < 0) my += apSt->mainPosDim.cy;
+                if (mx < 0) mx = mx + apSt->mainPosDim.cx;
+                if (my < 0) my = my + apSt->mainPosDim.cx;
+
+                if (mx > (apSt->mainPosDim.cx - apSt->thtPosDim.cx)) mx = mx%((apSt->mainPosDim.cx - apSt->thtPosDim.cx));
+                if (my > (apSt->mainPosDim.cy - apSt->thtPosDim.cy)) my = my%(apSt->mainPosDim.cy - apSt->thtPosDim.cy);
+
+                SetWindowPos(apSt->thtHwnd, HWND_TOP, mx, my, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+            }
+            break;
+        }
+        case WM_MOVE: {
+            int xPos = (int)(short) LOWORD(lp);   // horizontal position 
+            int yPos = (int)(short) HIWORD(lp);   // vertical position 
+            if (hWnd == apSt->mainHwnd) {
+                apSt->mainPosDim.x = xPos;
+                apSt->mainPosDim.y = yPos;
+            } else {
+                apSt->thtPosDim.x = xPos;
+                apSt->thtPosDim.y = yPos;
+            }
+            break;
+        }
+        case WM_SIZE: {
+            int width = LOWORD(lp);
+            int height = HIWORD(lp);
+            if (hWnd == apSt->mainHwnd) {
+                apSt->mainPosDim.cx = width;
+                apSt->mainPosDim.cy = height;
+            } else {
+                apSt->thtPosDim.cx = width;
+                apSt->thtPosDim.cy = height;
+            }
             break;
         }
         case WM_PAINT: {
