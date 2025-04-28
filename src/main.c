@@ -96,7 +96,7 @@ LRESULT CALLBACK MainWndProc(
                 &&
                 (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
             ) {
-                int mx = (cx + dx); //%(apSt->mainPosDim.cx - 50);
+                int mx = (cx + dx - apSt->thtPosDim.cx); //%(apSt->mainPosDim.cx - 50);
                 int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
                 // if (mx < 0) mx += apSt->mainPosDim.cx;
                 // if (my < 0) my += apSt->mainPosDim.cy;
@@ -160,7 +160,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
