@@ -7,10 +7,15 @@
 #include "../lib/windows.h"
 
 const char* chThts[] = {
-    "00 end myself",
-    "11 end myself end myself end myself",
-    "22 end myself end myself",
-    "33 end"
+    "Turning the alarm off and sleep.",
+    "Computer hard. Become Amish.",
+    "Do an AI startup.",
+    "Invest in Apple, Inc.",
+    "Kidnapper? I barely know 'er.",
+    "The knives are speaking to me.",
+    "TBD",
+    "TBD",
+    "TBD"
 };
 const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
 
