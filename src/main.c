@@ -112,7 +112,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V6XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V7XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
@@ -123,9 +123,10 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
-            if (hWnd != apSt->mainHwnd) break;
-            PostQuitMessage(0);
-            return 0;
+            if (hWnd == apSt->mainHwnd) {
+                PostQuitMessage(0);
+                return 0;
+            }
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
