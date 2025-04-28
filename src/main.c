@@ -192,7 +192,7 @@ LRESULT CALLBACK MainWndProc(
             while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
             ReleaseDC(apSt->thtHwnd, hdc);
             tbs.cy = (tbs.cy)*2 + frameWidth + captionHeight;
-            tbs.cx += tbs.cy + frameWidth*2;
+            tbs.cx = tbs.cx + frameWidth*2;
 
             RECT tr;
             GetWindowRect(apSt->thtHwnd, &tr);
