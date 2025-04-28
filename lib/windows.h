@@ -65,9 +65,7 @@ BOOL GetMessageA(
     UINT  wMsgFilterMax
 );
 
-int
-WINAPI
-wsprintfA(
+int WINAPI wsprintfA(
     LPSTR,
     LPCSTR,
     ...
