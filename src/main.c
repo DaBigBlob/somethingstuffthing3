@@ -73,8 +73,8 @@ void spawnThought(AppState* apSt, BOOL once) {
     SIZE tbs;
     while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
     ReleaseDC(apSt->thtHwnd, hdc);
-    tbs.cy += 2*frameWidth + captionHeight +5;
-    tbs.cx += 2*frameWidth +5;
+    tbs.cy = (tbs.cy)*2 + frameWidth + captionHeight;
+    tbs.cx += tbs.cy + frameWidth*2;
 
     RECT mr;
     GetWindowRect(apSt->mainHwnd, &mr);
@@ -191,8 +191,8 @@ LRESULT CALLBACK MainWndProc(
             SIZE tbs;
             while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
             ReleaseDC(apSt->thtHwnd, hdc);
-            tbs.cy += frameWidth + captionHeight;
-            tbs.cx += frameWidth*2;
+            tbs.cy = (tbs.cy)*2 + frameWidth + captionHeight;
+            tbs.cx += tbs.cy + frameWidth*2;
 
             RECT tr;
             GetWindowRect(apSt->thtHwnd, &tr);
@@ -200,7 +200,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V7, buttonWidth=%d, frameWidth=%d, captionHeight=%d, tbs.cy=%d, tbs.cx=%d, tcx=%d, tcy=%d",
+                "V8, buttonWidth=%d, frameWidth=%d, captionHeight=%d, tbs.cy=%d, tbs.cx=%d, tcx=%d, tcy=%d",
                 buttonWidth, frameWidth, captionHeight, tbs.cy, tbs.cx, tr.right-tr.left, tr.bottom-tr.top
             );
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
