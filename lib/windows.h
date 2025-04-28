@@ -36,6 +36,7 @@ extern "C" {
 #define IDC_NO                          (LPCSTR) MAKEINTRESOURCE(32648)
 #define IDC_CROSS                       (LPCSTR) MAKEINTRESOURCE(32515)
 #define SM_CXSIZE                       30
+#define SM_CYSIZE                       31
 #define SM_CXFRAME                      32
 #define SM_CYFRAME                      33
 #define SM_CYCAPTION                    4

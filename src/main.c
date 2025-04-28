@@ -62,6 +62,8 @@ POINT GetCloseButtonCenter(HWND hwnd) {
 void spawnThought(AppState* apSt, BOOL once) {
     int buttonWidth;
     while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
+    int buttonHeight;
+    while ((buttonHeight = GetSystemMetrics(SM_CYSIZE)) == 0);
 
     LONG lvl = ++ apSt->lvl;
     apSt->hb = lvl*buttonWidth;
@@ -71,6 +73,7 @@ void spawnThought(AppState* apSt, BOOL once) {
     SIZE tbs;
     while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
     ReleaseDC(apSt->thtHwnd, hdc);
+    tbs.cy += buttonHeight;
 
     RECT mr;
     GetWindowRect(apSt->mainHwnd, &mr);
@@ -168,7 +171,7 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_LBUTTONDOWN: {
-            MessageBoxA(hWnd, "1Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+            MessageBoxA(hWnd, "2Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         // UpdateWindow(hWnd);
