@@ -181,7 +181,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 mr.left,mr.top,
                 mr.right-mr.left,mr.bottom-mr.top,
                 tr.left,tr.top,
