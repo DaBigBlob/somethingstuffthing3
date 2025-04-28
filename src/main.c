@@ -19,10 +19,11 @@ typedef struct tagAppState {
     WndPosDim mainPosDim;
     WndPosDim thtPosDim;
     WNDCLASS* PWndClass;
-    BOOL     die;
+    int ickyness
 } AppState, *PAppState;
 
 void spawnThought(AppState* apSt, BOOL once) {
+    apSt->ickyness += 52;
     while ((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
@@ -81,12 +82,12 @@ LRESULT CALLBACK MainWndProc(
 
             // we assume the close button is 26px each side // TODO: derive instead
             #define CB_HSIDE 13
-            #define ICKY_ZONE 81
-            int cx = apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE;
-            int cy = apSt->thtPosDim.y + CB_HSIDE;
+            #define ICKY_ZONE apSt->ickyness
+            #define cx (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE)
+            #define cy (apSt->thtPosDim.y + CB_HSIDE)
 
-            int dx = cx - msx;
-            int dy = cy - msy;
+            #define dx (cx - msx)
+            #define dy (cy - msy)
 
             if (
                 (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
@@ -95,6 +96,12 @@ LRESULT CALLBACK MainWndProc(
             ) {
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
+            #undef CB_HSIDE
+            #undef ICKY_ZONE
+            #undef cx
+            #undef cy
+            #undef dx
+            #undef dy
             break;
         }
         case WM_MOVE: {
@@ -179,7 +186,7 @@ int WINAPI WinMain() {
 
     AppState apSt = {
         .PWndClass = &MainWinClass,
-        .die = FALSE
+        .ickyness = 0
     };
 
     while ((apSt.mainHwnd = CreateWindowExA(
