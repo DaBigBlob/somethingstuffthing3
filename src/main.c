@@ -180,18 +180,31 @@ LRESULT CALLBACK MainWndProc(
         //     break;
         // }
         case WM_LBUTTONDOWN: {
-            RECT mr;
-            RECT tr;
-            GetWindowRect(apSt->mainHwnd, &mr);
-            GetWindowRect(apSt->thtHwnd, &tr);
+            int buttonWidth;
+            while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
+            int frameWidth;
+            while ((frameWidth = GetSystemMetrics(SM_CXFRAME)) == 0);
+            int frameHeight;
+            while ((frameHeight = GetSystemMetrics(SM_CYFRAME)) == 0);
+            int captionHeight;
+            while ((captionHeight = GetSystemMetrics(SM_CYCAPTION)) == 0);
+
+            LONG lvl = ++ apSt->lvl;
+            apSt->hb = lvl*buttonWidth;
+
+            HDC hdc = GetDC(apSt->thtHwnd);
+            const char* nxt_tht = chThts[(apSt->lvl)%cntCnThts];
+            SIZE tbs;
+            while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
+            ReleaseDC(apSt->thtHwnd, hdc);
+            tbs.cy += frameHeight + captionHeight;
+            tbs.cx += frameWidth*2;
+
             char str[30];
             wsprintfA(
                 str,
-                "V4,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
-                mr.left,mr.top,
-                mr.right-mr.left,mr.bottom-mr.top,
-                tr.left,tr.top,
-                tr.right-tr.left,tr.bottom-tr.top
+                "V4, buttonWidth=%d, frameWidth=%d, frameHeight=%d, captionHeight=%d",
+                buttonWidth, frameWidth, frameHeight, captionHeight
             );
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
