@@ -22,7 +22,7 @@ typedef struct tagAppState {
     BOOL     die;
 } AppState, *PAppState;
 
-void spawnThought(AppState* apSt) {
+void spawnThought(AppState* apSt, BOOL once) {
     while ((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
@@ -36,7 +36,9 @@ void spawnThought(AppState* apSt) {
         0,
         apSt->PWndClass->hInstance,
         apSt
-    )) == 0);
+    )) == 0) {
+        if (once) return;
+    };
 }
 
 LRESULT CALLBACK MainWndProc(
@@ -112,7 +114,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
@@ -123,8 +125,10 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
-            if (hWnd == apSt->mainHwnd) PostQuitMessage(0);
-            return 0;
+            if (hWnd == apSt->mainHwnd) {
+                PostQuitMessage(0);
+                return 0;
+            } else spawnThought(apSt, TRUE);
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
@@ -169,13 +173,13 @@ int WINAPI WinMain() {
     )) == 0);
     ShowWindow(apSt.mainHwnd, SW_SHOWMAXIMIZED);
 
-    spawnThought(&apSt);
+    spawnThought(&apSt, FALSE);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
-        if (!IsWindow(apSt.thtHwnd)) spawnThought(&apSt);
+        if (!IsWindow(apSt.thtHwnd)) spawnThought(&apSt, FALSE);
     }
 
     ExitProcess(0);
