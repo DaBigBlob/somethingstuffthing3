@@ -123,11 +123,8 @@ LRESULT CALLBACK MainWndProc(
         }
         // UpdateWindow(hWnd);
         case WM_DESTROY: {
-            if (IsWindow(apSt->mainHwnd) && (hWnd != apSt->mainHwnd)) spawnThought(apSt);
-            else {
-                PostQuitMessage(0);
-                return 0;
-            }
+            PostQuitMessage(0);
+            return 0;
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
@@ -192,6 +189,7 @@ int WINAPI WinMain() {
     while (GetMessageA(&msg, 0, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
+        if (!IsWindow(apSt.thtHwnd)) spawnThought(&apSt);
     }
 
     ExitProcess(0);
