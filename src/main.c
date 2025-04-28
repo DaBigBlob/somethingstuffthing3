@@ -62,6 +62,8 @@ POINT GetCloseButtonCenter(HWND hwnd) {
 void spawnThought(AppState* apSt, BOOL once) {
     int buttonWidth;
     while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
+    int frameWidth;
+    while ((frameWidth = GetSystemMetrics(SM_CXFRAME)) == 0);
     int frameHeight;
     while ((frameHeight = GetSystemMetrics(SM_CYFRAME)) == 0);
     int captionHeight;
@@ -75,8 +77,8 @@ void spawnThought(AppState* apSt, BOOL once) {
     SIZE tbs;
     while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
     ReleaseDC(apSt->thtHwnd, hdc);
-    tbs.cy += frameHeight + captionHeight +5;
-    tbs.cx += 5;
+    tbs.cy += 2*frameHeight + captionHeight +5;
+    tbs.cx += 2*frameWidth +5;
 
     RECT mr;
     GetWindowRect(apSt->mainHwnd, &mr);
