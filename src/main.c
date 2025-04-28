@@ -179,7 +179,6 @@ int WINAPI WinMain() {
     while (GetMessageA(&msg, 0, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
-        // if (!IsWindow(apSt.thtHwnd)) spawnThought(&apSt, FALSE);
     }
 
     ExitProcess(0);
