@@ -41,6 +41,7 @@ LRESULT CALLBACK MainWndProc(
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
+        // UpdateWindow(hWnd);
         case WM_DESTROY: {
             PostQuitMessage(0);
             return 0;
@@ -74,30 +75,31 @@ int WINAPI WinMain() {
         MainWinClass.lpszClassName,
         MainWinClass.lpszClassName,
         WS_VISIBLE|WS_MAXIMIZE,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
+        0,
+        0,
+        100,
+        100,
         0,
         0,
         hInstance,
         &apSt
     )) == 0);
+    ShowWindow(apSt.mainHwnd, SW_SHOWMAXIMIZED);
 
-    while ((apSt.thtHwnd = CreateWindowExA(
-        0,
-        MainWinClass.lpszClassName,
-        "the voice",
-        WS_VISIBLE|WS_CAPTION,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        apSt.mainHwnd,
-        0,
-        hInstance,
-        &apSt
-    )) == 0);
+    // while ((apSt.thtHwnd = CreateWindowExA(
+    //     0,
+    //     MainWinClass.lpszClassName,
+    //     "the voice",
+    //     WS_VISIBLE|WS_CAPTION,
+    //     CW_USEDEFAULT,
+    //     CW_USEDEFAULT,
+    //     CW_USEDEFAULT,
+    //     CW_USEDEFAULT,
+    //     apSt.mainHwnd,
+    //     0,
+    //     hInstance,
+    //     &apSt
+    // )) == 0);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
