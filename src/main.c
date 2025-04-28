@@ -27,7 +27,7 @@ void spawnThought(AppState* apSt, BOOL once) {
         0,
         apSt->PWndClass->lpszClassName,
         "the voice",
-        WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU|WS_THICKFRAME,
+        WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
         150,
