@@ -6,6 +6,11 @@
 #include "../lib/misc.h"
 #include "../lib/windows.h"
 
+typedef struct _tagAppState {
+    HWND mainHwnd;
+    HWND thtHwnd;
+} AppState, *PAppState;
+
 LRESULT CALLBACK MainWndProc(
     HWND hWnd,
     UINT msg,
@@ -24,7 +29,7 @@ LRESULT CALLBACK MainWndProc(
         }
         case WM_LBUTTONDOWN: {
             char str[20];
-            wsprintfA(str, "%d %d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
+            wsprintfA(str, "X:%d, Y:%d", GET_X_LPARAM(lp), GET_Y_LPARAM(lp));
             
             SetWindowPos(hWnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
@@ -54,13 +59,26 @@ int WINAPI WinMain() {
         .hbrBackground = (void *)5, // std window color
         .lpszClassName = "intrusive thoughts"
     };
-    if (RegisterClassA(&MainWinClass) == 0) {
-        ExitProcess(1);
-        return 1;
-    }
+    while (RegisterClassA(&MainWinClass) == 0);
 
-    HWND mainWn;
-    if ((mainWn = CreateWindowExA(
+    AppState apSt;
+
+    while ((apSt.thtHwnd = CreateWindowExA(
+        0,
+        MainWinClass.lpszClassName,
+        "the voice",
+        WS_VISIBLE|WS_CAPTION,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        0,
+        0,
+        hInstance,
+        0
+    )) == 0);
+
+    while ((apSt.mainHwnd = CreateWindowExA(
         0,
         MainWinClass.lpszClassName,
         MainWinClass.lpszClassName,
@@ -73,10 +91,7 @@ int WINAPI WinMain() {
         0,
         hInstance,
         0
-    )) == 0) {
-        ExitProcess(1);
-        return 1;
-    }
+    )) == 0);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
