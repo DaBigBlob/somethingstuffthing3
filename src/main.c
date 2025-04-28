@@ -6,6 +6,8 @@
 #include "../lib/misc.h"
 #include "../lib/windows.h"
 
+#define HARDNESS_GRADIENT 30
+
 typedef struct tagWndPosDim {
     int       cy;
     int       cx;
@@ -23,7 +25,7 @@ typedef struct tagAppState {
 } AppState, *PAppState;
 
 void spawnThought(AppState* apSt, BOOL once) {
-    apSt->ickyness += 52;
+    apSt->ickyness += HARDNESS_GRADIENT;
     while ((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
