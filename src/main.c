@@ -128,7 +128,8 @@ LRESULT CALLBACK MainWndProc(
             if (hWnd == apSt->mainHwnd) {
                 PostQuitMessage(0);
                 return 0;
-            } else spawnThought(apSt, TRUE);
+            }
+            // else spawnThought(apSt, TRUE); // TODO: add this back for release
         }
     }
     return DefWindowProcA(hWnd, msg, wp, lp);
