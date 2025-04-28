@@ -29,8 +29,8 @@ void spawnThought(AppState* apSt, BOOL once) {
         apSt->PWndClass->lpszClassName,
         "the voice",
         WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
+        apSt->mainPosDim.cx/2,
+        apSt->mainPosDim.cy/2,
         150,
         90,
         apSt->mainHwnd,
@@ -86,7 +86,7 @@ LRESULT CALLBACK MainWndProc(
             #define CB_HSIDE 13
             #define ICKY_ZONE apSt->ickyness
             int cx = (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE);
-            int cy = (apSt->thtPosDim.y + CB_HSIDE);
+            int cy = (apSt->thtPosDim.y - CB_HSIDE);
 
             int dx = cx - msx;
             int dy = cy - msy;
@@ -96,10 +96,15 @@ LRESULT CALLBACK MainWndProc(
                 &&
                 (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
             ) {
-                int mx = (cx + dx)%(apSt->mainPosDim.cx);
-                int my = (cy + dy)%(apSt->mainPosDim.cy);
+                int mx = (cx + dx); //%(apSt->mainPosDim.cx - 50);
+                int my = (cy + dy); //%(apSt->mainPosDim.cy - 50);
                 // if (mx < 0) mx += apSt->mainPosDim.cx;
                 // if (my < 0) my += apSt->mainPosDim.cy;
+                if (mx < 0) mx = -mx;
+                if (my < 0) my = -my;
+
+                if (mx > apSt->mainPosDim.cx) mx = mx%(apSt->mainPosDim.cx);
+                if (my > apSt->mainPosDim.cy) my = my%(apSt->mainPosDim.cy);
 
                 SetWindowPos(apSt->thtHwnd, HWND_TOP, mx, my, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
@@ -155,7 +160,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
