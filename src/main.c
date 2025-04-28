@@ -8,6 +8,12 @@
 
 #define HARDNESS_GRADIENT 30
 
+const char* chThts[] = {
+    "Im gonna do it.",
+    "Kidnapper? I barely know 're!"
+};
+const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
+
 typedef struct tagWndPosDim {
     int       cy;
     int       cx;
@@ -141,11 +147,12 @@ LRESULT CALLBACK MainWndProc(
             HDC hdc = BeginPaint(hWnd, &ps);
 
             if (hWnd == apSt->mainHwnd) {
-
+                char str[20];
+                wsprintfA(str, "MENTAL ILLNESS: %d", apSt->ickyness);
+                TextOutA(hdc, 10, 10, str, lstrlenA(str));
             } else {
-                const char* text = "Hello, Windows!";
+                const char* text = chThts[(apSt->ickyness)%cntCnThts];
                 TextOutA(hdc, 10, 10, text, lstrlenA(text));
-                // ExtTextOutA(hdc, 10, 10, 0, 0, text, lstrlenA(text), 0);
             }
 
             EndPaint(hWnd, &ps);
