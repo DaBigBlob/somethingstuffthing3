@@ -6,9 +6,18 @@
 #include "../lib/misc.h"
 #include "../lib/windows.h"
 
-typedef struct _tagAppState {
+typedef struct tagWndPosDim {
+    int       cy;
+    int       cx;
+    int       y;
+    int       x;
+} WndPosDim, *PWndPosDim;
+
+typedef struct tagAppState {
     HWND mainHwnd;
     HWND thtHwnd;
+    WndPosDim mainPosDim;
+    WndPosDim thtPosDim;
 } AppState, *PAppState;
 
 LRESULT CALLBACK MainWndProc(
@@ -98,7 +107,7 @@ int WINAPI WinMain() {
         CW_USEDEFAULT,
         100,
         100,
-        apSt.mainHwnd,
+        0,
         0,
         hInstance,
         &apSt
