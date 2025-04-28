@@ -12,10 +12,7 @@ const char* chThts[] = {
     "00",
     "11",
     "22",
-    "33",
-    "44",
-    "55",
-    "66",
+    "33"
 };
 const int cntCnThts = sizeof(chThts)/sizeof(chThts[0]);
 
@@ -182,7 +179,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
