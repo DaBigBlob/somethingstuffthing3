@@ -85,23 +85,29 @@ LRESULT CALLBACK MainWndProc(
             // we assume the close button is 26px each side // TODO: derive instead
             #define CB_HSIDE 13
             #define ICKY_ZONE apSt->ickyness
-            #define cx (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE)
-            #define cy (apSt->thtPosDim.y + CB_HSIDE)
+            #define ccx (apSt->thtPosDim.x + apSt->thtPosDim.cx - CB_HSIDE)
+            #define ccy (apSt->thtPosDim.y + CB_HSIDE)
 
-            #define dx (cx - msx)
-            #define dy (cy - msy)
+            #define dx (ccx - msx)
+            #define dy (ccy - msy)
+
+            #define mx (ccx + dx)%(apSt->mainPosDim.cx)
+            #define my (ccy + dy)%(apSt->mainPosDim.cy)
 
             if (
                 (-ICKY_ZONE <= dx) && (dx <= ICKY_ZONE)
                 &&
                 (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
             ) {
-                SetWindowPos(apSt->thtHwnd, HWND_TOP, cx+dx, cy+dy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+                SetWindowPos(apSt->thtHwnd, HWND_TOP, mx, my, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
+
+            #undef mx
+            #undef my
             #undef CB_HSIDE
             #undef ICKY_ZONE
-            #undef cx
-            #undef cy
+            #undef ccx
+            #undef ccy
             #undef dx
             #undef dy
             break;
@@ -156,7 +162,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
