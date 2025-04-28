@@ -6,8 +6,6 @@
 #include "../lib/misc.h"
 #include "../lib/windows.h"
 
-#define HARDNESS_GRADIENT 30
-
 const char* chThts[] = {
     "00 end myself",
     "11 end myself end myself end myself",
@@ -62,8 +60,17 @@ POINT GetCloseButtonCenter(HWND hwnd) {
 }
 
 void spawnThought(AppState* apSt, BOOL once) {
+    int buttonWidth;
+    while ((buttonWidth = GetSystemMetrics(SM_CXSIZE)) == 0);
+
     LONG lvl = ++ apSt->lvl;
-    apSt->hb = lvl*HARDNESS_GRADIENT;
+    apSt->hb = lvl*buttonWidth;
+
+    HDC hdc = GetDC(apSt->thtHwnd);
+    const char* nxt_tht = chThts[(apSt->lvl)%cntCnThts];
+    SIZE tbs;
+    while (GetTextExtentPoint32A(hdc, nxt_tht, lstrlenA(nxt_tht), &tbs) == 0);
+    ReleaseDC(apSt->thtHwnd, hdc);
 
     RECT mr;
     GetWindowRect(apSt->mainHwnd, &mr);
@@ -78,8 +85,8 @@ void spawnThought(AppState* apSt, BOOL once) {
         WS_VISIBLE|WS_CAPTION|WS_OVERLAPPED|WS_SYSMENU,
         p.x,
         p.y,
-        150,
-        90,
+        tbs.cx,
+        tbs.cy,
         apSt->mainHwnd,
         0,
         apSt->PWndClass->hInstance,
@@ -161,7 +168,7 @@ LRESULT CALLBACK MainWndProc(
             break;
         }
         case WM_LBUTTONDOWN: {
-            MessageBoxA(hWnd, "Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+            MessageBoxA(hWnd, "1Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         // UpdateWindow(hWnd);

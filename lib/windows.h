@@ -88,6 +88,11 @@ typedef struct tagPAINTSTRUCT {
   BYTE rgbReserved[32];
 } PAINTSTRUCT, *PPAINTSTRUCT, *NPPAINTSTRUCT, *LPPAINTSTRUCT;
 
+typedef struct tagSIZE {
+  LONG cx;
+  LONG cy;
+} SIZE, *PSIZE, *LPSIZE;
+
 LONG_PTR WINAPI SetWindowLongPtrA(
     HWND     hWnd,
     int      nIndex,
@@ -173,6 +178,22 @@ BOOL WINAPI GetCursorPos(
 BOOL WINAPI GetWindowRect(
     HWND   hWnd,
     LPRECT lpRect
+);
+
+BOOL WINAPI GetTextExtentPoint32A(
+    HDC    hdc,
+    LPCSTR lpString,
+    int    c,
+    LPSIZE psizl
+);
+
+HDC WINAPI GetDC(
+    HWND hWnd
+);
+
+int WINAPI ReleaseDC(
+  HWND hWnd,
+  HDC  hDC
 );
 
 
