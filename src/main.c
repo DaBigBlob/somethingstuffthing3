@@ -86,20 +86,20 @@ int WINAPI WinMain() {
     )) == 0);
     ShowWindow(apSt.mainHwnd, SW_SHOWMAXIMIZED);
 
-    // while ((apSt.thtHwnd = CreateWindowExA(
-    //     0,
-    //     MainWinClass.lpszClassName,
-    //     "the voice",
-    //     WS_VISIBLE|WS_CAPTION,
-    //     CW_USEDEFAULT,
-    //     CW_USEDEFAULT,
-    //     CW_USEDEFAULT,
-    //     CW_USEDEFAULT,
-    //     apSt.mainHwnd,
-    //     0,
-    //     hInstance,
-    //     &apSt
-    // )) == 0);
+    while ((apSt.thtHwnd = CreateWindowExA(
+        0,
+        MainWinClass.lpszClassName,
+        "the voice",
+        WS_VISIBLE|WS_CAPTION,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        apSt.mainHwnd,
+        0,
+        hInstance,
+        &apSt
+    )) == 0);
 
     MSG msg;
     while (GetMessageA(&msg, 0, 0, 0)) {
