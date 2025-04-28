@@ -170,8 +170,25 @@ LRESULT CALLBACK MainWndProc(
             MessageBoxA(hWnd, "Holy sheet bro. Damn.", "!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
+        // case WM_LBUTTONDOWN: {
+        //     MessageBoxA(hWnd, "2Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+        //     break;
+        // }
         case WM_LBUTTONDOWN: {
-            MessageBoxA(hWnd, "2Woah there buddy. Calm down.", "?", MB_OK|MB_ICONEXCLAMATION);
+            RECT mr;
+            RECT tr;
+            GetWindowRect(apSt->mainHwnd, &mr);
+            GetWindowRect(apSt->thtHwnd, &tr);
+            char str[30];
+            wsprintfA(
+                str,
+                "V8,XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                mr.left,mr.top,
+                mr.right-mr.left,mr.bottom-mr.top,
+                tr.left,tr.top,
+                tr.right-tr.left,tr.bottom-tr.top
+            );
+            MessageBoxA(hWnd, str, "Ding!", MB_OK|MB_ICONEXCLAMATION);
             break;
         }
         // UpdateWindow(hWnd);
