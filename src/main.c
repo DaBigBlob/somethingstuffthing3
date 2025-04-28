@@ -24,7 +24,7 @@ typedef struct tagAppState {
 
 void spawnThought(AppState* apSt) {
     if (apSt->die) return;
-    while ((apSt->thtHwnd = CreateWindowExA(
+    while (((apSt->thtHwnd = CreateWindowExA(
         0,
         apSt->PWndClass->lpszClassName,
         "the voice",
@@ -37,7 +37,7 @@ void spawnThought(AppState* apSt) {
         0,
         apSt->PWndClass->hInstance,
         apSt
-    )) == 0);
+    )) == 0) && !(apSt->die));
 }
 
 LRESULT CALLBACK MainWndProc(
@@ -113,7 +113,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V2XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V3XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
