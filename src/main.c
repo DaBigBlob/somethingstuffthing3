@@ -40,6 +40,8 @@ void spawnThought(AppState* apSt, BOOL once) {
     )) == 0) {
         if (once) return;
     };
+    UpdateWindow(apSt->thtHwnd);
+    UpdateWindow(apSt->mainHwnd);
 }
 
 LRESULT CALLBACK MainWndProc(
@@ -94,7 +96,7 @@ LRESULT CALLBACK MainWndProc(
                 &&
                 (-ICKY_ZONE <= dy) && (dy <= ICKY_ZONE)
             ) {
-                SetWindowPos(apSt->thtHwnd, HWND_TOP, GET_X_LPARAM(lp), GET_Y_LPARAM(lp), CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
+                SetWindowPos(apSt->thtHwnd, HWND_TOP, cx+dx, cy+dy, CW_USEDEFAULT, CW_USEDEFAULT, SWP_SHOWWINDOW|SWP_NOSIZE);
             }
             #undef CB_HSIDE
             #undef ICKY_ZONE
@@ -128,6 +130,15 @@ LRESULT CALLBACK MainWndProc(
             }
             break;
         }
+        case WM_PAINT: {
+
+            if (hWnd == apSt->mainHwnd) {
+
+            } else {
+
+            }
+            break;
+        }
         case WM_RBUTTONDOWN: {
             char* name;
             if (hWnd == apSt->mainHwnd) {
@@ -145,7 +156,7 @@ LRESULT CALLBACK MainWndProc(
             char str[30];
             wsprintfA(
                 str,
-                "V9XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
+                "V8XM:%d,YM:%d,CXM:%d,CYM:%d,XT:%d,YT:%d,CXT:%d,CYT:%d",
                 apSt->mainPosDim.x,apSt->mainPosDim.y,
                 apSt->mainPosDim.cx,apSt->mainPosDim.cy,
                 apSt->thtPosDim.x,apSt->thtPosDim.y,
