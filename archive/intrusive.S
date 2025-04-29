@@ -18,11 +18,11 @@ GetCursorPosNoFail:                     # @GetCursorPosNoFail
 	subq	$48, %rsp
 	leaq	40(%rsp), %rsi
 	.p2align	4, 0x90
-.LBB0_1:                                # =>This Inner Loop Header: Depth=1
+.loop0_1:                                # =>This Inner Loop Header: Depth=1
 	movq	%rsi, %rcx
 	callq	GetCursorPos
 	testl	%eax, %eax
-	je	.LBB0_1
+	je	.loop0_1
 
 	movq	40(%rsp), %rax
 	addq	$48, %rsp
@@ -43,12 +43,12 @@ GetWindowRectNoFail:                    # @GetWindowRectNoFail
 	movq	%rdx, %rdi
 	movq	%rcx, %rsi
 	.p2align	4, 0x90
-.LBB1_1:                                # =>This Inner Loop Header: Depth=1
+.loop1_1:                                # =>This Inner Loop Header: Depth=1
 	movq	%rdi, %rcx
 	movq	%rsi, %rdx
 	callq	GetWindowRect
 	testl	%eax, %eax
-	je	.LBB1_1
+	je	.loop1_1
 
 	movq	%rsi, %rax
 	addq	$40, %rsp
@@ -70,34 +70,34 @@ GetCloseButtonCenter:                   # @GetCloseButtonCenter
 	movq	%rcx, %rsi
 	leaq	40(%rsp), %rdi
 	.p2align	4, 0x90
-.LBB2_1:                                # =>This Inner Loop Header: Depth=1
+.loop2_1:                                # =>This Inner Loop Header: Depth=1
 	movq	%rsi, %rcx
 	movq	%rdi, %rdx
 	callq	GetWindowRect
 	testl	%eax, %eax
-	je	.LBB2_1
+	je	.loop2_1
 	.p2align	4, 0x90
-.LBB2_2:                                # =>This Inner Loop Header: Depth=1
+.loop2_2:                                # =>This Inner Loop Header: Depth=1
 	movl	$30, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB2_2
+	je	.loop2_2
 
 	movl	%eax, %esi
 	.p2align	4, 0x90
-.LBB2_4:                                # =>This Inner Loop Header: Depth=1
+.loop2_4:                                # =>This Inner Loop Header: Depth=1
 	movl	$32, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB2_4
+	je	.loop2_4
 
 	movl	%eax, %edi
 	.p2align	4, 0x90
-.LBB2_6:                                # =>This Inner Loop Header: Depth=1
+.loop2_6:                                # =>This Inner Loop Header: Depth=1
 	movl	$4, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB2_6
+	je	.loop2_6
 
 	movl	48(%rsp), %ecx
 	movl	%esi, %edx
@@ -140,27 +140,27 @@ spawnThought:                           # @spawnThought
 	movl	%edx, %edi
 	movq	%rcx, %rsi
 	.p2align	4, 0x90
-.LBB3_1:                                # =>This Inner Loop Header: Depth=1
+.loop3_1:                                # =>This Inner Loop Header: Depth=1
 	movl	$30, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB3_1
+	je	.loop3_1
 
 	movl	%eax, %ebp
 	.p2align	4, 0x90
-.LBB3_3:                                # =>This Inner Loop Header: Depth=1
+.loop3_3:                                # =>This Inner Loop Header: Depth=1
 	movl	$32, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB3_3
+	je	.loop3_3
 
 	movl	%eax, %ebx
 	.p2align	4, 0x90
-.LBB3_5:                                # =>This Inner Loop Header: Depth=1
+.loop3_5:                                # =>This Inner Loop Header: Depth=1
 	movl	$4, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB3_5
+	je	.loop3_5
 
 	movl	%eax, %r14d
 	movl	24(%rsi), %eax
@@ -182,7 +182,7 @@ spawnThought:                           # @spawnThought
 	movq	(%rcx,%rax,8), %r12
 	leaq	96(%rsp), %r13
 	.p2align	4, 0x90
-.LBB3_7:                                # =>This Inner Loop Header: Depth=1
+.loop3_7:                                # =>This Inner Loop Header: Depth=1
 	movq	%r12, %rcx
 	callq	lstrlenA
 	movq	%r15, %rcx
@@ -191,7 +191,7 @@ spawnThought:                           # @spawnThought
 	movq	%r13, %r9
 	callq	GetTextExtentPoint32A
 	testl	%eax, %eax
-	je	.LBB3_7
+	je	.loop3_7
 
 	movq	8(%rsi), %rcx
 	movq	%r15, %rdx
@@ -219,7 +219,7 @@ spawnThought:                           # @spawnThought
 	sarl	%r14d
 	leaq	.str.8(%rip), %rbx
 	.p2align	4, 0x90
-.LBB3_9:                                # =>This Inner Loop Header: Depth=1
+.loop3_9:                                # =>This Inner Loop Header: Depth=1
 	movq	(%rsi), %rax
 	movq	16(%rsi), %rcx
 	movq	24(%rcx), %r8
@@ -240,12 +240,12 @@ spawnThought:                           # @spawnThought
 	callq	CreateWindowExA
 	movq	%rax, 8(%rsi)
 	testq	%rax, %rax
-	jne	.LBB3_11
+	jne	.loop3_11
 
 	testl	%edi, %edi
-	je	.LBB3_9
-	jmp	.LBB3_12
-.LBB3_11:
+	je	.loop3_9
+	jmp	.loop3_12
+.loop3_11:
 	movq	%rax, %rcx
 	xorl	%edx, %edx
 	movl	$1, %r8d
@@ -258,7 +258,7 @@ spawnThought:                           # @spawnThought
 	callq	InvalidateRect
 	movq	(%rsi), %rcx
 	callq	UpdateWindow
-.LBB3_12:
+.loop3_12:
 	addq	$120, %rsp
 	popq	%rbx
 	popq	%rbp
@@ -292,37 +292,37 @@ MainWndProc:                            # @MainWndProc
 	movl	%edx, %ebx
 	movq	%rcx, %r14
 	cmpl	$1, %edx
-	jne	.LBB4_2
+	jne	.loop4_2
 
 	movq	(%rsi), %r8
 	movq	%r14, %rcx
 	movl	$-21, %edx
 	callq	SetWindowLongPtrA
-	jmp	.LBB4_44
-.LBB4_2:
+	jmp	.loop4_44
+.loop4_2:
 	movq	%r14, %rcx
 	movl	$-21, %edx
 	callq	GetWindowLongPtrA
 	cmpl	$511, %ebx                      # imm = 0x1FF
-	jle	.LBB4_3
+	jle	.loop4_3
 
 	cmpl	$516, %ebx                      # imm = 0x204
-	je	.LBB4_38
+	je	.loop4_38
 
 	cmpl	$513, %ebx                      # imm = 0x201
-	je	.LBB4_40
+	je	.loop4_40
 
 	cmpl	$512, %ebx                      # imm = 0x200
-	jne	.LBB4_44
+	jne	.loop4_44
 
 	movq	%rax, %r15
 	leaq	104(%rsp), %r12
 	.p2align	4, 0x90
-.LBB4_11:                               # =>This Inner Loop Header: Depth=1
+.loop4_11:                               # =>This Inner Loop Header: Depth=1
 	movq	%r12, %rcx
 	callq	GetCursorPos
 	testl	%eax, %eax
-	je	.LBB4_11
+	je	.loop4_11
 
 	movq	104(%rsp), %rax
 	movq	%rax, 96(%rsp)                  # 8-byte Spill
@@ -332,35 +332,35 @@ MainWndProc:                            # @MainWndProc
 	movq	8(%r15), %r12
 	leaq	104(%rsp), %r13
 	.p2align	4, 0x90
-.LBB4_13:                               # =>This Inner Loop Header: Depth=1
+.loop4_13:                               # =>This Inner Loop Header: Depth=1
 	movq	%r12, %rcx
 	movq	%r13, %rdx
 	callq	GetWindowRect
 	testl	%eax, %eax
-	je	.LBB4_13
+	je	.loop4_13
 	.p2align	4, 0x90
-.LBB4_14:                               # =>This Inner Loop Header: Depth=1
+.loop4_14:                               # =>This Inner Loop Header: Depth=1
 	movl	$30, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB4_14
+	je	.loop4_14
 
 	movl	%eax, %ebp
 	movq	72(%rsp), %r12                  # 8-byte Reload
 	.p2align	4, 0x90
-.LBB4_16:                               # =>This Inner Loop Header: Depth=1
+.loop4_16:                               # =>This Inner Loop Header: Depth=1
 	movl	$32, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB4_16
+	je	.loop4_16
 
 	movl	%eax, 68(%rsp)                  # 4-byte Spill
 	.p2align	4, 0x90
-.LBB4_18:                               # =>This Inner Loop Header: Depth=1
+.loop4_18:                               # =>This Inner Loop Header: Depth=1
 	movl	$4, %ecx
 	callq	GetSystemMetrics
 	testl	%eax, %eax
-	je	.LBB4_18
+	je	.loop4_18
 
 	movl	108(%rsp), %ecx
 	movl	%ecx, 80(%rsp)                  # 4-byte Spill
@@ -374,12 +374,12 @@ MainWndProc:                            # @MainWndProc
 	movq	8(%r12), %r12
 	leaq	104(%rsp), %r13
 	.p2align	4, 0x90
-.LBB4_20:                               # =>This Inner Loop Header: Depth=1
+.loop4_20:                               # =>This Inner Loop Header: Depth=1
 	movq	%r12, %rcx
 	movq	%r13, %rdx
 	callq	GetWindowRect
 	testl	%eax, %eax
-	je	.LBB4_20
+	je	.loop4_20
 
 	movl	%ebp, %eax
 	shrl	$31, %ebp
@@ -390,12 +390,12 @@ MainWndProc:                            # @MainWndProc
 	movq	(%rax), %r12
 	leaq	176(%rsp), %r13
 	.p2align	4, 0x90
-.LBB4_22:                               # =>This Inner Loop Header: Depth=1
+.loop4_22:                               # =>This Inner Loop Header: Depth=1
 	movq	%r12, %rcx
 	movq	%r13, %rdx
 	callq	GetWindowRect
 	testl	%eax, %eax
-	je	.LBB4_22
+	je	.loop4_22
 
 	movq	72(%rsp), %r10                  # 8-byte Reload
 	movl	28(%r10), %eax
@@ -406,19 +406,19 @@ MainWndProc:                            # @MainWndProc
 	movl	%eax, %ecx
 	negl	%ecx
 	cmpl	%ecx, %ebp
-	jl	.LBB4_44
+	jl	.loop4_44
 
 	cmpl	%eax, %ebp
-	jg	.LBB4_44
+	jg	.loop4_44
 
 	addl	80(%rsp), %r15d                 # 4-byte Folded Reload
 	movl	%r15d, %r9d
 	subl	88(%rsp), %r9d                  # 4-byte Folded Reload
 	cmpl	%ecx, %r9d
-	jl	.LBB4_44
+	jl	.loop4_44
 
 	cmpl	%eax, %r9d
-	jg	.LBB4_44
+	jg	.loop4_44
 
 	movl	104(%rsp), %eax
 	movl	108(%rsp), %ecx
@@ -429,22 +429,22 @@ MainWndProc:                            # @MainWndProc
 	addl	%r15d, %r9d
 	addl	188(%rsp), %ecx
 	addl	%eax, %ebp
-	js	.LBB4_28
+	js	.loop4_28
 
 	cmpl	%r8d, %ebp
-	jl	.LBB4_31
+	jl	.loop4_31
 
 	movl	%ebp, %eax
 	cltd
 	idivl	%r8d
 	movl	%edx, %ebp
-	jmp	.LBB4_31
-.LBB4_3:
+	jmp	.loop4_31
+.loop4_3:
 	cmpl	$2, %ebx
-	je	.LBB4_41
+	je	.loop4_41
 
 	cmpl	$15, %ebx
-	jne	.LBB4_44
+	jne	.loop4_44
 
 	leaq	104(%rsp), %rdx
 	movq	%r14, %rcx
@@ -453,7 +453,7 @@ MainWndProc:                            # @MainWndProc
 	movq	%rax, %r12
 	movq	%r15, %rax
 	cmpq	%r14, (%r15)
-	je	.LBB4_6
+	je	.loop4_6
 
 	movl	24(%rax), %eax
 	leal	7(%rax), %ecx
@@ -470,33 +470,33 @@ MainWndProc:                            # @MainWndProc
 	movq	%r12, %rcx
 	xorl	%edx, %edx
 	xorl	%r8d, %r8d
-	jmp	.LBB4_37
-.LBB4_38:
+	jmp	.loop4_37
+.loop4_38:
 	leaq	.str.10(%rip), %rdx
 	leaq	.str.11(%rip), %r8
-	jmp	.LBB4_39
-.LBB4_40:
+	jmp	.loop4_39
+.loop4_40:
 	leaq	.str.12(%rip), %rdx
 	leaq	.str.13(%rip), %r8
-.LBB4_39:
+.loop4_39:
 	movq	%r14, %rcx
 	movl	$48, %r9d
 	callq	MessageBoxA
-	jmp	.LBB4_44
-.LBB4_41:
+	jmp	.loop4_44
+.loop4_41:
 	cmpq	%r14, (%rax)
-	je	.LBB4_42
+	je	.loop4_42
 
 	movq	%rax, %rcx
 	movl	$1, %edx
 	callq	spawnThought
-	jmp	.LBB4_44
-.LBB4_42:
+	jmp	.loop4_44
+.loop4_42:
 	xorl	%ecx, %ecx
 	callq	PostQuitMessage
 	xorl	%eax, %eax
-	jmp	.LBB4_45
-.LBB4_6:
+	jmp	.loop4_45
+.loop4_6:
 	movl	24(%rax), %r8d
 	leaq	.str.9(%rip), %rdx
 	leaq	176(%rsp), %r15
@@ -508,30 +508,30 @@ MainWndProc:                            # @MainWndProc
 	movq	%r12, %rcx
 	movl	$10, %edx
 	movl	$10, %r8d
-.LBB4_37:
+.loop4_37:
 	movq	%r15, %r9
 	callq	TextOutA
 	leaq	104(%rsp), %rdx
 	movq	%r14, %rcx
 	callq	EndPaint
-	jmp	.LBB4_44
-.LBB4_28:
+	jmp	.loop4_44
+.loop4_28:
 	addl	%r8d, %ebp
-.LBB4_31:
+.loop4_31:
 	testl	%r9d, %r9d
-	js	.LBB4_32
+	js	.loop4_32
 
 	cmpl	%ecx, %r9d
-	jl	.LBB4_35
+	jl	.loop4_35
 
 	movl	%r9d, %eax
 	cltd
 	idivl	%ecx
 	movl	%edx, %r9d
-	jmp	.LBB4_35
-.LBB4_32:
+	jmp	.loop4_35
+.loop4_32:
 	addl	%ecx, %r9d
-.LBB4_35:
+.loop4_35:
 	movq	8(%r10), %rcx
 	movl	$65, 48(%rsp)
 	movl	$-2147483648, 40(%rsp)          # imm = 0x80000000
@@ -539,13 +539,13 @@ MainWndProc:                            # @MainWndProc
 	xorl	%edx, %edx
 	movl	%ebp, %r8d
 	callq	SetWindowPos
-.LBB4_44:
+.loop4_44:
 	movq	%r14, %rcx
 	movl	%ebx, %edx
 	movq	%rdi, %r8
 	movq	%rsi, %r9
 	callq	DefWindowProcA
-.LBB4_45:
+.loop4_45:
 	addq	$216, %rsp
 	popq	%rbx
 	popq	%rbp
@@ -588,11 +588,11 @@ WinMain:                                # @WinMain
 	movq	%rax, 200(%rsp)
 	leaq	136(%rsp), %rdi
 	.p2align	4, 0x90
-.LBB5_1:                                # =>This Inner Loop Header: Depth=1
+.loop5_1:                                # =>This Inner Loop Header: Depth=1
 	movq	%rdi, %rcx
 	callq	RegisterClassA
 	testw	%ax, %ax
-	je	.LBB5_1
+	je	.loop5_1
 
 	xorps	%xmm6, %xmm6
 	movaps	%xmm6, 112(%rsp)
@@ -600,7 +600,7 @@ WinMain:                                # @WinMain
 	movq	%rdi, 112(%rsp)
 	leaq	96(%rsp), %rdi
 	.p2align	4, 0x90
-.LBB5_3:                                # =>This Inner Loop Header: Depth=1
+.loop5_3:                                # =>This Inner Loop Header: Depth=1
 	movq	200(%rsp), %rdx
 	movq	%rdi, 88(%rsp)
 	movq	%rsi, 80(%rsp)
@@ -615,7 +615,7 @@ WinMain:                                # @WinMain
 	callq	CreateWindowExA
 	movq	%rax, 96(%rsp)
 	testq	%rax, %rax
-	je	.LBB5_3
+	je	.loop5_3
 
 	movq	%rax, %rcx
 	movl	$3, %edx
@@ -629,11 +629,11 @@ WinMain:                                # @WinMain
 	xorl	%r9d, %r9d
 	callq	GetMessageA
 	testl	%eax, %eax
-	je	.LBB5_7
+	je	.loop5_7
 
 	leaq	208(%rsp), %rsi
 	.p2align	4, 0x90
-.LBB5_6:                                # =>This Inner Loop Header: Depth=1
+.loop5_6:                                # =>This Inner Loop Header: Depth=1
 	movq	%rsi, %rcx
 	callq	TranslateMessage
 	movq	%rsi, %rcx
@@ -644,8 +644,8 @@ WinMain:                                # @WinMain
 	xorl	%r9d, %r9d
 	callq	GetMessageA
 	testl	%eax, %eax
-	jne	.LBB5_6
-.LBB5_7:
+	jne	.loop5_6
+.loop5_7:
 	xorl	%ecx, %ecx
 	callq	ExitProcess
 	xorl	%eax, %eax
