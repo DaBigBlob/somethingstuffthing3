@@ -26,6 +26,7 @@ ascl: ${ASM}${NAME}.S
 	${_SED} -E -i "" 's/^.*\.(file|def|scl|type|endef).*$$//' ${ASM}${NAME}.S
 	${_SED} -E -i "" 's/^.*#+.*\%bb\..*$$//' ${ASM}${NAME}.S
 	${_SED} -E -i "" 's/^.*@feat\..*$$//' ${ASM}${NAME}.S
+	${_SED} -E -i "" 's/.LBB/loopy/' ${ASM}${NAME}.S
 
 assm: ${ASM}${NAME}.S
 	${CC} ${ASM}${NAME}.S ${BFLAGS} ${AFLAGS} -o ${BIN}${NAME}.exe
